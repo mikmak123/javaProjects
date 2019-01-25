@@ -5,8 +5,9 @@ public class HelloNumbers {
         int y = 0;
         while (x < 9) {
             System.out.print(y + " ");
-            y = x+y;
+            
             x = x + 1;
+            y = y+x
         }
     }
 }
