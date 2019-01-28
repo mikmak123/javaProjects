@@ -4,16 +4,21 @@ public class Body {
 	public String imgFileName; 
 
 	public Body(double xP, double yP, double xV, double yV, double m, String img) {
-		xp = xxPos;
-		yyPos = yp;
+		xxPos = xP;
+		yyPos = yP;
 		xxVel = xV;
 		yyVel = yV;
 		mass = m;
-		img = imgFileName;
+		imgFileName = img;
 	}
 
 	public Body(Body p) {
-		this = p;
+		xxPos = p.xxPos;
+		yyPos = p.yyPos;
+		xxVel = p.xxVel;
+		yyVel = p.yyVel;
+		mass = p.mass;
+		imgFileName = p.imgFileName;
 	}
 	
 
