@@ -38,7 +38,7 @@ public class Body {
 		double first = Math.max(this.xxPos, b.xxPos);
 		double sec = Math.min(this.xxPos, b.xxPos);
 		double dx = first - sec;
-		return (this.calcForceExertedBy(b) * dx)/this.calcDistance(b);
+		return (this.calcForceExertedBy(b) * -dx)/this.calcDistance(b);
 	}
 	public double calcForceExertedByY(Body b) {
 		double first = Math.max(this.yyPos, b.yyPos);
