@@ -29,18 +29,16 @@ public class NBody {
 		String filename = args[2];
 		double radius = readRadius(filename); 
 		Body[] planets = readBodies(filename);
-		StdDraw.setScale(-radius, radius);
-		StdDraw.picture(0, 0, "images/starfield.jpg");
 
-		for(Body b : planets) {
-			b.draw();
-		}
 		StdDraw.enableDoubleBuffering();
+		StdDraw.setScale(-radius, radius);
 		StdDraw.show();
+
 		double time = 0;
 		int l = planets.length;
 		double xForces[] = new double[l];
 		double yForces[] = new double[l];
+
 		while(time <= t ) {
 			 
 			for(int x =0; x < l; x+=1) {
@@ -49,16 +47,19 @@ public class NBody {
 			}
 			for(int x =0; x < l; x+=1) {
 				planets[x].update(dt, xForces[x], yForces[x]);
-				StdDraw.show();
-				StdDraw.pause(10);
-				time += dt;
 			}
-				StdDraw.setScale(-radius, radius);
 				StdDraw.picture(0, 0, "images/starfield.jpg");
-				StdDraw.show();
 				for(Body b : planets) {
 					b.draw();
 				}
+				
+				time += dt;
+				StdDraw.show();
+				StdDraw.pause(10);
+				
+				
+				
+				
 		} 
 		StdOut.printf("%d\n", l);
 		StdOut.printf("%.2e\n", radius);

@@ -35,16 +35,13 @@ public class Body {
 	}
 
 	public double calcForceExertedByX(Body b) {
-		double first = Math.max(this.xxPos, b.xxPos);
-		double sec = Math.min(this.xxPos, b.xxPos);
-		double dx = first - sec;
-		return -1*(this.calcForceExertedBy(b) * dx)/this.calcDistance(b);
+		
+		double dx = b.xxPos- this.xxPos;
+		return (this.calcForceExertedBy(b) * dx)/this.calcDistance(b);
 	}
 	public double calcForceExertedByY(Body b) {
-		double first = Math.max(this.yyPos, b.yyPos);
-		double sec = Math.min(this.yyPos, b.yyPos);
-		double dy = first - sec;
-		return -1*(this.calcForceExertedBy(b) * dy)/this.calcDistance(b);
+		double dy = b.yyPos - this.yyPos;
+		return (this.calcForceExertedBy(b) * dy)/this.calcDistance(b);
 	}
 	public double calcNetForceExertedByX(Body[] b){
 		double sum = 0;
@@ -55,7 +52,7 @@ public class Body {
 			}
 			sum += this.calcForceExertedByX(x);
 		}
-		return -1* sum;
+		return sum;
 
 	}
 	public double calcNetForceExertedByY(Body[] b){
@@ -66,7 +63,7 @@ public class Body {
 			}
 			sum += this.calcForceExertedByY(y); 
 		}
-		return -1* sum;
+		return sum;
 
 	}
 
