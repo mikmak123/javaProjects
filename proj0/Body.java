@@ -2,7 +2,7 @@ public class Body {
 
 	public double xxPos, yyPos, xxVel, yyVel, mass;
 	public String imgFileName; 
-	public final static double g = 6.67e-11;
+	private final static double g = 6.67e-11;
 
 	public Body(double xP, double yP, double xV, double yV, double m, String img) {
 		xxPos = xP;
