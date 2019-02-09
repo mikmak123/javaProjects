@@ -108,7 +108,7 @@ public class ArrayDeque<T> {
             }
             System.out.println();
         } else {
-            while (count != end) {
+            for (int i = 0; i < size; i++) {
                 if (count == items.length) {
                     count = 0;
                 }
@@ -125,12 +125,17 @@ public class ArrayDeque<T> {
         }
         if (front + 1 == items.length) {
             front = 0;
+            T a = items[front];
+            items[front] = null;
+            size--;
+            return a;
+        } else {
+            T a = items[front + 1];
+            items[front + 1] = null;
+            frontforward();
+            size--;
+            return a;
         }
-        T a = items[front + 1];
-        items[front + 1] = null;
-        frontforward();
-        size--;
-        return a;
     }
 
     public T removeLast() {
