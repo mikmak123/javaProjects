@@ -33,11 +33,11 @@ public class ArrayDeque<T> {
         } else if (size >= items.length) {
             T[] a = (T[]) new Object[size * 2];
             for (int i = 0; i < size; i++) {
-                a[i] = items[(front + i) % items.length];
-
+                a[i] = items[(front + 1 + i) % items.length];
             }
             items = a;
             front = 0;
+            frontback();
             end = size;
         }
     }
@@ -71,7 +71,10 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (items.length > 16 || size == items.length) {
+        if (size == items.length) {
+            resize();
+        }
+        if (items.length > 16 && size < items.length) {
             resize();
         }
         items[front] = item;
