@@ -74,9 +74,6 @@ public class ArrayDeque<T> {
         if (items.length > 16 || size == items.length) {
             resize();
         }
-        if (front <= 0) {
-            front = items.length - 1;
-        }
         items[front] = item;
         frontback();
         size++;
@@ -85,9 +82,6 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         if (items.length >= 16 || size == items.length) {
             resize();
-        }
-        if (end >= items.length - 1) {
-            end = 0;
         }
         items[end] = item;
         endforward();
@@ -157,12 +151,13 @@ public class ArrayDeque<T> {
             items[end] = null;
             size--;
             return a;
+        } else {
+            T a = items[end - 1];
+            items[end - 1] = null;
+            endback();
+            size--;
+            return a;
         }
-        T a = items[end - 1];
-        items[end - 1] = null;
-        endback();
-        size--;
-        return a;
     }
 
     public T get(int index) {
