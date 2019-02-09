@@ -123,7 +123,7 @@ public class LinkedListDeque<T> {
 
     }
 
-    public T getRec(Node a, int ind) {
+    private T getRec(Node a, int ind) {
         if (ind == 0) {
             return a.first;
         } else {
