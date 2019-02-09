@@ -75,12 +75,11 @@ public class IntListTest {
     IntList test = IntList.of(1,2,3,4,5);
     IntList temp = IntList.of(1,2,3,4,5);
     IntList expected = IntList.of(5,4,3,2,1);
-    IntList a = null;
-    IntList b = null;
+    IntList empty = IntList.of();
 
     assertEquals(IntList.reverse(test), expected);
-    assertNotEquals(temp, IntList.reverse(test));
-    assertEquals(a, b);
+    assertNotEquals(temp, test);
+    assertEquals(IntList.reverse(empty), null );
 
     }
 
