@@ -25,10 +25,10 @@ public class ArrayDeque<T> {
         if ((double) size / items.length < .25 && items.length >= 16) {
             T[] b = (T[]) new Object[(int) (items.length / 2)];
             for (int i = 0; i < size; i++) {
-                b[i] = items[(front + i) % items.length];
+                b[i] = items[(front + 1 + i) % items.length];
             }
             items = b;
-            front = 0;
+            front = items.length - 1;
             end = size;
         } else if (size >= items.length) {
             T[] a = (T[]) new Object[size * 2];
