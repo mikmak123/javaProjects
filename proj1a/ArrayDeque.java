@@ -18,8 +18,7 @@ public class ArrayDeque<T> {
         size = 0;
         items = (T[]) new Object[other.items.length];
         for (int i = 0; i < other.size; i++) {
-            int index = other.front + i % other.items.length;
-            this.addLast((T) other.get(index));
+            this.addLast((T) other.get(i));
         }
     }
 
