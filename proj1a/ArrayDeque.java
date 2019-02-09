@@ -16,8 +16,8 @@ public class ArrayDeque<T> {
         front = 0;
         end = 1;
         size = 0;
-        while (this.size < other.size) {
-            this.addLast((T) other.get(this.size));
+        for (int i =0; i< size; i++) {
+            this.addLast((T) other.get((other.front + i) % other.items.length));
         }
     }
 
@@ -128,12 +128,14 @@ public class ArrayDeque<T> {
             T a = items[front];
             items[front] = null;
             size--;
+            resize();
             return a;
         } else {
             T a = items[front + 1];
             items[front + 1] = null;
             frontforward();
             size--;
+            resize();
             return a;
         }
     }
@@ -142,8 +144,13 @@ public class ArrayDeque<T> {
         if (this.isEmpty()) {
             return null;
         }
+        resize();
         if (end == 0) {
             end = items.length - 1;
+            T a = items[end];
+            items[end] = null;
+            size--;
+            return a;
         }
         T a = items[end - 1];
         items[end - 1] = null;
