@@ -22,7 +22,7 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-        if ((double) size / items.length < .25) {
+        if ((double) size / items.length < .25 && items.length >= 16) {
             T[] b = (T[]) new Object[(int) (items.length / 2)];
             for (int i = 0; i < size; i++) {
                 b[i] = items[(front + i) % items.length];
@@ -74,14 +74,20 @@ public class ArrayDeque<T> {
         if (items.length > 16 || size == items.length) {
             resize();
         }
+        if (front <= 0) {
+            front = items.length - 1;
+        }
         items[front] = item;
         frontback();
         size++;
     }
 
     public void addLast(T item) {
-        if (items.length > 16 || size == items.length) {
+        if (items.length >= 16 || size == items.length) {
             resize();
+        }
+        if (end >= items.length - 1) {
+            end = 0;
         }
         items[end] = item;
         endforward();
