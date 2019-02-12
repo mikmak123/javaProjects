@@ -70,7 +70,6 @@ public class ArrayDeque<T> implements Deque<T> {
             end = items.length - 1;
         }
     }
-
     @Override
     public void addFirst(T item) {
         if (size == items.length) {
@@ -83,7 +82,6 @@ public class ArrayDeque<T> implements Deque<T> {
         frontback();
         size++;
     }
-
     @Override
     public void addLast(T item) {
         if (items.length >= 16 || size == items.length) {
