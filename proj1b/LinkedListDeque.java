@@ -1,6 +1,5 @@
 public class LinkedListDeque<T> implements Deque<T> {
 
-
     private class Node {
 
         private T first;

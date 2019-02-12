@@ -18,6 +18,7 @@ public class TestPalindrome {
 
 
     public static void main(String[] args) {
+
         testWordToDeque();
     }
 }
