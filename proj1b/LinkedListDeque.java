@@ -64,6 +64,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     @Override
     public int size() {
+
         return size;
     }
 
