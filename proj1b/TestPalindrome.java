@@ -16,9 +16,30 @@ public class TestPalindrome {
         assertEquals("persiflage", actual);
     }
 
+    @Test
+    public void testIsPalindrome() {
+        assertTrue(palindrome.isPalindrome("racecar"));
+        assertTrue(palindrome.isPalindrome("noon"));
+        assertFalse(palindrome.isPalindrome("car"));
+        assertFalse(palindrome.isPalindrome("September"));
+        assertFalse(palindrome.isPalindrome("Racecar"));
+    }
+
+    @Test
+    public void testIsPalindrome1() {
+        assertTrue(palindrome.isPalindrome("flake", new OffByOne()));
+        assertTrue(palindrome.isPalindrome("afijeb", new OffByOne()));
+        assertFalse(palindrome.isPalindrome("racecar", new OffByOne()));
+    }
+
 
     public static void main(String[] args) {
 
-        testWordToDeque();
+        TestPalindrome test = new TestPalindrome();
+        test.testWordToDeque();
+        test.testWordToDeque();
+        test.testIsPalindrome();
+        test.testIsPalindrome1();
+
     }
 }
