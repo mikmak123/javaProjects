@@ -2,6 +2,10 @@ public class OffByOne implements CharacterComparator {
 
     @Override
     public boolean equalChars(char x, char y) {
-        return Math.abs(x - y) == 1 || Math.abs(x - y) == 33 || Math.abs(x - y) == 31;
+        if (Character.isLetter(x) && Character.isLetter((y))) {
+            return Math.abs(x - y) == 1;
+        } else {
+            return false;
+        }
     }
 }
