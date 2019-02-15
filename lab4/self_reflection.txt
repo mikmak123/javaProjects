@@ -1,0 +1,63 @@
+All questions are optional, though try to answer at least 4. The main goal of this file is to get you thinking critically about your own work, but we will also use these self reflections at the end of the semester when we do our internal review of the course.
+
+ArrayDeque:
+
+Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
+
+A: I think my printDeque method could have been a lot cleaner. My resize method could not have had two conditions inside.
+
+Q: What's something you felt proud of in your code, if anything?
+
+A: My resize method seemed straightforward and clean.
+
+Q: What's something that was particularly inelegant in your code, if anything?
+
+A: My printDeque method didn't take advantage of the get method.
+
+Q: What did you learn by talking to your partner about writing ArrayDeque?
+
+A: There are many different way to go about solving this problem, resizing at different times, and pointers at different spots.
+
+Q: What do you wish you would have known before writing ArrayDeque, if anything?
+
+A: I wish I would have had a better understanding of pointers.
+
+Q: If you wrote ArrayDeque again, what would you do differently, if anything?
+
+A: My increased understanding of pointers probably would have made my code more readable, and having less if/else cases.
+
+-----
+
+LinkedListDeque:
+
+Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
+
+A: Make a variable to store the old node when implementing addFirst and addLast
+
+Q: What's something you felt proud of in your code, if anything?
+
+A: My recursive get method worked successfully with a helper method.
+
+Q: What's something that was particularly inelegant in your code, if anything?
+
+A: I think my printDeque method could have been written more concisely. 
+
+Q: What did you learn by talking to your partner about writing LinkedListDeque?
+
+A: The Node class could take in prev node as a parameter in its constructor.
+
+Q: What do you wish you would have known before writing LinkedListDeque, if anything?
+
+A: I wish I would have known what private meant.
+
+Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
+
+A: I would have maybe made prev a parameter in my node class constructor, and rewritten my printDeque method. 
+
+-----
+
+Meta:
+
+Q: Did you like this design review process? Anything we should do differently next time?
+
+A: Yes, looking at code from different perspectives was helpful. 
