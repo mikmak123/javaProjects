@@ -52,6 +52,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and
         //       update first.
         T item = rb[first];
+        rb[first] = null;
         first = (first + 1) % cap;
         fillCount--;
         return item;
