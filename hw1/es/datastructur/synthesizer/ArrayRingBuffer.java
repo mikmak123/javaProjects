@@ -65,7 +65,9 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
      */
     @Override
     public T peek() {
-
+        if (isEmpty()) {
+            throw new RuntimeException("Ring Buffer underflow");
+        }
         return rb[first];
     }
 
