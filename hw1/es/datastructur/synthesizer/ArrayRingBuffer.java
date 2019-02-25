@@ -1,5 +1,5 @@
 package es.datastructur.synthesizer;
-// import java.util.Iterator;
+import java.util.Iterator;
 
 
 public class ArrayRingBuffer<T> implements BoundedQueue<T> {
@@ -34,6 +34,9 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public void enqueue(T x) {
 
+        if (isFull()) {
+            throw new RuntimeException("Ring Buffer overflow");
+        }
         rb[last] = x;
         last = (last + 1) % cap;
         fillCount++;
@@ -46,6 +49,9 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public T dequeue() {
 
+        if (isEmpty()) {
+            throw new RuntimeException("Ring Buffer underflow");
+        }
         T item = rb[first];
         rb[first] = null;
         first = (first + 1) % cap;
@@ -71,6 +77,49 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     @Override
     public int fillCount() {
         return fillCount;
+    }
+
+    public Iterator<T> iterator() {
+        return new BufferIterator();
+    }
+
+    private class BufferIterator implements Iterator<T> {
+        private int pos = 0;
+
+        public boolean hasNext() {
+            return pos < cap;
+        }
+
+        public T next() {
+            T item = rb[pos];
+            pos += 1;
+            return item;
+        }
+
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return true;
+        }
+        if (this == o) {
+            return true;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+        ArrayRingBuffer<T> other = (ArrayRingBuffer<T>) o;
+        if (other.fillCount() != this.fillCount()) {
+            return false;
+        }
+        Iterator<T> f = this.iterator();
+        Iterator<T> s = ((ArrayRingBuffer<T>) o).iterator();
+        while (f.hasNext()) {
+            if (f.next() != s.next()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
