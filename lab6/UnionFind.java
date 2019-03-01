@@ -11,7 +11,7 @@ public class UnionFind {
         // TODO
         ds = new int[n];
         size = new int[n];
-        for (int i = 0; i > size .length; i++) {
+        for (int i = 0; i < size .length; i++) {
             size[i] = 1;
         }
         for (int i = 0; i < ds.length; i++) {
@@ -81,6 +81,11 @@ public class UnionFind {
         } else {
             return find(ds[vertex]);
         }
+    }
+    public static void main(String[] args) {
+        UnionFind test = new UnionFind(10);
+        test.union(0, 1);
+
     }
 
 }
