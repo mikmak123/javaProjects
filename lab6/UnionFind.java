@@ -63,10 +63,10 @@ public class UnionFind {
             return;
         }
         if (sizeOf(v1) > sizeOf(v2)) {
-            ds[find(v2)] = v1;
+            ds[find(v2)] = find(v1);
             size[find(v1)] += size[find(v2)];
         } else {
-            ds[find(v1)] = v2;
+            ds[find(v1)] = find(v2);
             size[find(v2)] += size[find(v1)];
         }
     }
