@@ -63,11 +63,12 @@ public class UnionFind {
             return;
         }
         if (sizeOf(v1) > sizeOf(v2)) {
-            ds[find(v2)] = find(v1);
             size[find(v1)] += size[find(v2)];
+            ds[find(v2)] = find(v1);
         } else {
-            ds[find(v1)] = find(v2);
             size[find(v2)] += size[find(v1)];
+            ds[find(v1)] = find(v2);
+
         }
     }
 
@@ -81,11 +82,6 @@ public class UnionFind {
         } else {
             return find(ds[vertex]);
         }
-    }
-    public static void main(String[] args) {
-        UnionFind test = new UnionFind(10);
-        test.union(0, 1);
-
     }
 
 }
