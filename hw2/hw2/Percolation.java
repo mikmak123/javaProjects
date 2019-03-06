@@ -69,15 +69,24 @@ public class Percolation {
             }
             for (int i = len * len - len; i < len * len; i++) {
                 if (space == i) {
-                    track.union(bottom, space);
                     if (space == len * len - len) {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
+                        }
+                        if (isFull(row -1, col) || isFull(row , col + 1)) {
+                            track.union(bottom, space);
+                        } else {
+                            track.union(space, three);
                         }
                         return;
                     } else if (space == len * len - 1) {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
+                        }
+                        if (isFull(row - 1, col) || isFull(row, col - 1)) {
+                            track.union(bottom, space);
+                        } else {
+                            track.union(space, four);
                         }
                         return;
                     } else {
@@ -89,6 +98,9 @@ public class Percolation {
                         }
                         if (isOpen(row, col - 1)) {
                             track.union(space, four);
+                        }
+                        if (isFull(row - 1, col) || isFull(row, col + 1) || isFull(row, col - 1)) {
+                            track.union(space, bottom);
                         }
                         return;
                     }
