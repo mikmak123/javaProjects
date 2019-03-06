@@ -16,8 +16,8 @@ public class Percolation {
         perc = new boolean[N][N];
         track = new WeightedQuickUnionUF(N * N + 2);
         openSites = 0;
-        top = N * N + 1;
-        bottom = N * N + 2;
+        top = N * N;
+        bottom = N * N + 1;
         len = N;
     }
 
@@ -41,22 +41,51 @@ public class Percolation {
             int four = convert(row, col - 1);
 
             for (int i = 0; i < len; i++) {
-                if (convert(row, col) == i) {
-                    track.union(convert(row, col), len + 1);
+                if (space == i) {
+                    track.union(top, convert(row, col));
+                    if (space == 0) {
+                        track.union(space, two);
+                        track.union(space, three);
+                        return;
+                    } else if (space == len - 1) {
+                        track.union(space, two);
+                        track.union(space, four);
+                        return;
+                    } else {
+                        track.union(space, two);
+                        track.union(space, three);
+                        track.union(space, four);
+                        return;
+                    }
                 }
             }
             for (int i = len * len - len; i < len * len; i++) {
                 if (convert(row, col) == i) {
-                    track.union(convert(row, col), bottom);
+                    track.union(bottom, convert(row, col));
+                    if (space == len * len - len) {
+                        track.union(space, one);
+                        track.union(space, three);
+                        return;
+                    } else if (space == len * len - 1) {
+                        track.union(space, one);
+                        track.union(space, four);
+                        return;
+                    } else {
+                        track.union(space, one);
+                        track.union(space, three);
+                        track.union(space, four);
+                        return;
+                    }
+
                 }
             }
 
             for (int i = len; i < len * (len - 1); i += len) {
-
                 if (space == i) {
                     track.union(space, two);
                     track.union(space, four);
                     track.union(space, three);
+                    return;
                 }
             }
             for (int i = len + 4; i < len * len - 1; i += len) {
@@ -64,11 +93,13 @@ public class Percolation {
                     track.union(space, one);
                     track.union(space, four);
                     track.union(space, three);
+                    return;
                 } else {
                     track.union(space, one);
                     track.union(space, two);
                     track.union(space, four);
                     track.union(space, three);
+                    return;
                 }
             }
         }
@@ -100,5 +131,16 @@ public class Percolation {
 
     public static void main(String[] args) {
 
+        Percolation test = new Percolation(5);
+        test.open(0,0);
+        test.open(1,1);
+        test.open(2,2);
+        test.open(1,2);
+        test.open(0,1);
+        System.out.println(test.isOpen(0,0));
+        System.out.println(test.isFull(0, 0));
+        System.out.println(test.isFull(1,1));
+        System.out.println(test.isFull( 3,3));
+        System.out.println(test.percolates());
     }
 }
