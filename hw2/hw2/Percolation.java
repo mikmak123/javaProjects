@@ -43,9 +43,10 @@ public class Percolation {
             for (int i = 0; i < len; i++) {
                 if (space == i) {
                     track.union(top, convert(row, col));
-                    if (isOpen(row + 1, col)) {
-                        track.union(space, two);
-                    }
+                    if (space == 0) {
+                        if (isOpen(row + 1, col)) {
+                            track.union(space, two);
+                        }
                     return;
                     } else if (space == len - 1) {
                         if (isOpen(row + 1, col)) {
@@ -65,6 +66,7 @@ public class Percolation {
                         return;
                     }
                 }
+            }
             for (int i = len * len - len; i < len * len; i++) {
                 if (space == i) {
                     track.union(bottom, space);
@@ -102,42 +104,40 @@ public class Percolation {
                     if (isOpen(row, col + 1)) {
                         track.union(space, three);
                     }
-                    if (isOpen(row, col - 1)) {
-                        track.union(space, four);
+                    if (isOpen(row - 1, col)) {
+                        track.union(space, one);
                     }
                     return;
                 }
             }
-            for (int i = len + 4; i < len * len - 1; i += len) {
+            for (int i = len * 2 - 1; i < len * len - 1; i += len) {
                 if (space == i) {
                     if (isOpen(row - 1, col)) {
                         track.union(space, one);
                     }
-                    if (isOpen(row, col + 1)) {
-                        track.union(space, three);
-                    }
                     if (isOpen(row, col - 1)) {
                         track.union(space, four);
                     }
-                    return;
-                } else {
                     if (isOpen(row + 1, col)) {
                         track.union(space, two);
-                    }
-                    if (isOpen(row - 1, col)) {
-                        track.union(space, one);
-                    }
-                    if (isOpen(row, col + 1)) {
-                        track.union(space, three);
-                    }
-                    if (isOpen(row, col - 1)) {
-                        track.union(space, four);
                     }
                     return;
                 }
             }
-        }
-    }
+            if (isOpen(row + 1, col)) {
+                track.union(space, two);
+            }
+            if (isOpen(row - 1, col)) {
+                track.union(space, one);
+            }
+            if (isOpen(row, col + 1)) {
+                track.union(space, three);
+            }
+            if (isOpen(row, col - 1)) {
+                track.union(space, four);
+            }
+                }
+            }
 
     public boolean isOpen(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
@@ -165,12 +165,13 @@ public class Percolation {
 
     public static void main(String[] args) {
 
-        Percolation test = new Percolation(5);
+        Percolation test = new Percolation(10);
         test.open(0,0);
-        test.open(1,1);
+        test.open(1,0);
         test.open(2,2);
         test.open(1,2);
         test.open(0,1);
+        test.open(3, 9);
         System.out.println(test.isOpen(0,0));
         System.out.println(test.isFull(0, 0));
         System.out.println(test.isFull(1,1));
