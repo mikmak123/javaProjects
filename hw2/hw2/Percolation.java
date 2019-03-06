@@ -29,7 +29,7 @@ public class Percolation {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
             throw new java.lang.IndexOutOfBoundsException();
         }
-        if (perc[row][col] == true) {
+        if (perc[row][col]) {
             return;
         } else {
             perc[row][col] = true;
@@ -47,7 +47,7 @@ public class Percolation {
                         if (isOpen(row + 1, col)) {
                             track.union(space, two);
                         }
-                    return;
+                        return;
                     } else if (space == len - 1) {
                         if (isOpen(row + 1, col)) {
                             track.union(space, two);
@@ -73,7 +73,7 @@ public class Percolation {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
                         }
-                        if (isFull(row -1, col) || isFull(row , col + 1)) {
+                        if (isFull(row - 1, col) || isFull(row, col + 1)) {
                             track.union(bottom, space);
                         } else {
                             track.union(space, three);
@@ -148,8 +148,8 @@ public class Percolation {
             if (isOpen(row, col - 1)) {
                 track.union(space, four);
             }
-                }
-            }
+        }
+    }
 
     public boolean isOpen(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
@@ -177,17 +177,5 @@ public class Percolation {
 
     public static void main(String[] args) {
 
-        Percolation test = new Percolation(10);
-        test.open(0,0);
-        test.open(1,0);
-        test.open(2,2);
-        test.open(1,2);
-        test.open(0,1);
-        test.open(3, 9);
-        System.out.println(test.isOpen(0,0));
-        System.out.println(test.isFull(0, 0));
-        System.out.println(test.isFull(1,1));
-        System.out.println(test.isFull( 3,3));
-        System.out.println(test.percolates());
     }
 }
