@@ -27,7 +27,7 @@ public class Percolation {
 
     public void open(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
-            throw new IndexOutOfBoundsException("Your row or column is out of range");
+            throw new java.lang.IndexOutOfBoundsException();
         }
         if (perc[row][col] == true) {
             return;
@@ -76,7 +76,7 @@ public class Percolation {
 
     public boolean isOpen(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
-            throw new IndexOutOfBoundsException("Your row or column is out of range");
+            throw new java.lang.IndexOutOfBoundsException();
         }
         return perc[row][col];
     }
@@ -84,7 +84,7 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
-            throw new IndexOutOfBoundsException("Your row or column is out of range");
+            throw new java.lang.IndexOutOfBoundsException();
         }
         return track.connected(convert(row, col), top);
     }
