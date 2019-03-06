@@ -43,37 +43,51 @@ public class Percolation {
             for (int i = 0; i < len; i++) {
                 if (space == i) {
                     track.union(top, convert(row, col));
-                    if (space == 0) {
+                    if (isOpen(row + 1, col)) {
                         track.union(space, two);
-                        track.union(space, three);
-                        return;
+                    }
+                    return;
                     } else if (space == len - 1) {
-                        track.union(space, two);
-                        track.union(space, four);
+                        if (isOpen(row + 1, col)) {
+                            track.union(space, two);
+                        }
                         return;
                     } else {
-                        track.union(space, two);
-                        track.union(space, three);
-                        track.union(space, four);
+                        if (isOpen(row + 1, col)) {
+                            track.union(space, two);
+                        }
+                        if (isOpen(row, col + 1)) {
+                            track.union(space, three);
+                        }
+                        if (isOpen(row, col - 1)) {
+                            track.union(space, four);
+                        }
                         return;
                     }
                 }
-            }
             for (int i = len * len - len; i < len * len; i++) {
-                if (convert(row, col) == i) {
-                    track.union(bottom, convert(row, col));
+                if (space == i) {
+                    track.union(bottom, space);
                     if (space == len * len - len) {
-                        track.union(space, one);
-                        track.union(space, three);
+                        if (isOpen(row - 1, col)) {
+                            track.union(space, one);
+                        }
                         return;
                     } else if (space == len * len - 1) {
-                        track.union(space, one);
-                        track.union(space, four);
+                        if (isOpen(row - 1, col)) {
+                            track.union(space, one);
+                        }
                         return;
                     } else {
-                        track.union(space, one);
-                        track.union(space, three);
-                        track.union(space, four);
+                        if (isOpen(row - 1, col)) {
+                            track.union(space, one);
+                        }
+                        if (isOpen(row, col + 1)) {
+                            track.union(space, three);
+                        }
+                        if (isOpen(row, col - 1)) {
+                            track.union(space, four);
+                        }
                         return;
                     }
 
@@ -82,23 +96,43 @@ public class Percolation {
 
             for (int i = len; i < len * (len - 1); i += len) {
                 if (space == i) {
-                    track.union(space, two);
-                    track.union(space, four);
-                    track.union(space, three);
+                    if (isOpen(row + 1, col)) {
+                        track.union(space, two);
+                    }
+                    if (isOpen(row, col + 1)) {
+                        track.union(space, three);
+                    }
+                    if (isOpen(row, col - 1)) {
+                        track.union(space, four);
+                    }
                     return;
                 }
             }
             for (int i = len + 4; i < len * len - 1; i += len) {
                 if (space == i) {
-                    track.union(space, one);
-                    track.union(space, four);
-                    track.union(space, three);
+                    if (isOpen(row - 1, col)) {
+                        track.union(space, one);
+                    }
+                    if (isOpen(row, col + 1)) {
+                        track.union(space, three);
+                    }
+                    if (isOpen(row, col - 1)) {
+                        track.union(space, four);
+                    }
                     return;
                 } else {
-                    track.union(space, one);
-                    track.union(space, two);
-                    track.union(space, four);
-                    track.union(space, three);
+                    if (isOpen(row + 1, col)) {
+                        track.union(space, two);
+                    }
+                    if (isOpen(row - 1, col)) {
+                        track.union(space, one);
+                    }
+                    if (isOpen(row, col + 1)) {
+                        track.union(space, three);
+                    }
+                    if (isOpen(row, col - 1)) {
+                        track.union(space, four);
+                    }
                     return;
                 }
             }
