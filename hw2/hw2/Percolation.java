@@ -56,19 +56,19 @@ public class Percolation {
                 if (space == i) {
                     track.union(space, two);
                     track.union(space, four);
-                    track.union(space, three;
+                    track.union(space, three);
                 }
             }
             for (int i = len + 4; i < len * len - 1; i += len) {
                 if (space == i) {
                     track.union(space, one);
                     track.union(space, four);
-                    track.union(space, three;
+                    track.union(space, three);
                 } else {
                     track.union(space, one);
                     track.union(space, two);
                     track.union(space, four);
-                    track.union(space, three;
+                    track.union(space, three);
                 }
             }
         }
