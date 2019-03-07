@@ -9,13 +9,13 @@ public class Percolation {
     private int top;
     private int bottom;
     private int len;
-    WeightedQuickUnionUF track;
-    WeightedQuickUnionUF second;
+    private WeightedQuickUnionUF track;
+    private WeightedQuickUnionUF second;
 
 
     public Percolation(int N) {
         if (N <= 0) {
-            throw new java.lang.IndexOutOfBoundsException();
+            throw new java.lang.IllegalArgumentException();
         }
         perc = new boolean[N][N];
         track = new WeightedQuickUnionUF(N * N + 2);
@@ -30,24 +30,101 @@ public class Percolation {
         return i * perc.length + j;
     }
 
+    private void sideRight(int row, int col) {
+        int space = convert(row, col);
+        int one = convert(row - 1, col); int two = convert(row + 1, col);
+        int three = convert(row, col + 1); int four = convert(row, col - 1);
+
+        if (isOpen(row - 1, col)) {
+            track.union(space, one); second.union(space, one);
+        }
+        if (isOpen(row, col - 1)) {
+            track.union(space, four); second.union(space, four);
+        }
+        if (isOpen(row + 1, col)) {
+            track.union(space, two); second.union(space, two);
+        }
+    }
+
+    private void sideLeft(int row, int col) {
+        int space = convert(row, col);
+        int one = convert(row - 1, col); int two = convert(row + 1, col);
+        int three = convert(row, col + 1); int four = convert(row, col - 1);
+
+        if (isOpen(row + 1, col)) {
+            track.union(space, two); second.union(space, two);
+        }
+        if (isOpen(row, col + 1)) {
+            track.union(space, three); second.union(space, three);
+        }
+        if (isOpen(row - 1, col)) {
+            track.union(space, one); second.union(space, one);
+        }
+    }
+
+    private void middle(int row, int col) {
+        int space = convert(row, col);
+        int one = convert(row - 1, col); int two = convert(row + 1, col);
+        int three = convert(row, col + 1); int four = convert(row, col - 1);
+
+        if (isOpen(row + 1, col)) {
+            track.union(space, two); second.union(space, two);
+        }
+        if (isOpen(row - 1, col)) {
+            track.union(space, one); second.union(space, one);
+        }
+        if (isOpen(row, col + 1)) {
+            track.union(space, three); second.union(space, three);
+        }
+        if (isOpen(row, col - 1)) {
+            track.union(space, four); second.union(space, four);
+        }
+    }
+    private void bottomLeft(int row, int col) {
+        int space = convert(row, col);
+        int one = convert(row - 1, col); int two = convert(row + 1, col);
+        int three = convert(row, col + 1); int four = convert(row, col - 1);
+        if (isOpen(row - 1, col)) {
+            track.union(space, one); second.union(space, one);
+        }
+        if (isOpen(row, col + 1)) {
+            track.union(space, three); second.union(space, three);
+        }
+        if (isFull(row - 1, col) || isFull(row, col + 1)) {
+            track.union(bottom, space);
+        }
+    }
+    private void bottomRight(int row, int col) {
+        int space = convert(row, col);
+        int one = convert(row - 1, col); int two = convert(row + 1, col);
+        int three = convert(row, col + 1); int four = convert(row, col - 1);
+
+        if (isOpen(row - 1, col)) {
+            track.union(space, one); second.union(space, one);
+        }
+        if (isOpen(row, col - 1)) {
+            track.union(space, four); second.union(space, four);
+        }
+        if (isFull(row - 1, col) || isFull(row, col - 1)) {
+            track.union(bottom, space);
+        }
+    }
+
+
+
     public void open(int row, int col) {
         if (row >= perc.length || col >= perc.length || row < 0 || col < 0) {
             throw new java.lang.IndexOutOfBoundsException();
-        }
-        if (perc[row][col]) {
-            return;
-        } else {
-            perc[row][col] = true; openSites++;
-            int space = convert(row, col); int one = convert(row - 1, col);
-            int two = convert(row + 1, col);
+        } else if (!perc[row][col]) {
+            perc[row][col] = true; openSites++; int space = convert(row, col);
+            int one = convert(row - 1, col); int two = convert(row + 1, col);
             int three = convert(row, col + 1); int four = convert(row, col - 1);
             for (int i = 0; i < len; i++) {
                 if (space == i) {
                     track.union(top, convert(row, col)); second.union(space, top);
                     if (space == 0) {
                         if (len == 1) {
-                            track.union(bottom, top);
-                            second.union(bottom, top);
+                            track.union(bottom, top); second.union(bottom, top);
                             return;
                         }
                         if (isOpen(row + 1, col)) {
@@ -77,28 +154,10 @@ public class Percolation {
                 if (space == i) {
                     second.union(space, bottom);
                     if (space == len * len - len) {
-                        if (isOpen(row - 1, col)) {
-                            track.union(space, one); second.union(space, one);
-                        }
-                        if (isOpen(row, col + 1)) {
-                            track.union(space, three); second.union(space, three);
-
-                        }
-                        if (isFull(row - 1, col) || isFull(row, col + 1)) {
-                            track.union(bottom, space);
-                        }
+                        bottomLeft(row, col);
                         return;
                     } else if (space == len * len - 1) {
-                        if (isOpen(row - 1, col)) {
-                            track.union(space, one); second.union(space, one);
-                        }
-                        if (isOpen(row, col - 1)) {
-                            track.union(space, four); second.union(space, four);
-
-                        }
-                        if (isFull(row - 1, col) || isFull(row, col - 1)) {
-                            track.union(bottom, space);
-                        }
+                        bottomRight(row, col);
                         return;
                     } else {
                         if (isOpen(row - 1, col)) {
@@ -120,44 +179,17 @@ public class Percolation {
             }
             for (int i = len; i < len * (len - 1); i += len) {
                 if (space == i) {
-                    if (isOpen(row + 1, col)) {
-                        track.union(space, two); second.union(space, two);
-                    }
-                    if (isOpen(row, col + 1)) {
-                        track.union(space, three); second.union(space, three);
-                    }
-                    if (isOpen(row - 1, col)) {
-                        track.union(space, one); second.union(space, one);
-                    }
+                    sideLeft(row, col);
                     return;
                 }
             }
             for (int i = len * 2 - 1; i < len * len - 1; i += len) {
                 if (space == i) {
-                    if (isOpen(row - 1, col)) {
-                        track.union(space, one); second.union(space, one);
-                    }
-                    if (isOpen(row, col - 1)) {
-                        track.union(space, four); second.union(space, four);
-                    }
-                    if (isOpen(row + 1, col)) {
-                        track.union(space, two); second.union(space, two);
-                    }
+                    sideRight(row, col);
                     return;
                 }
             }
-            if (isOpen(row + 1, col)) {
-                track.union(space, two); second.union(space, two);
-            }
-            if (isOpen(row - 1, col)) {
-                track.union(space, one); second.union(space, one);
-            }
-            if (isOpen(row, col + 1)) {
-                track.union(space, three); second.union(space, three);
-            }
-            if (isOpen(row, col - 1)) {
-                track.union(space, four); second.union(space, four);
-            }
+            middle(row, col);
         }
     }
 
@@ -186,10 +218,6 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-        Percolation test = new Percolation(2);
-        test.open(0,0);
-        test.open(1, 0);
-        test.open(0, 1);
-        test.open(1,1);
+
     }
 }
