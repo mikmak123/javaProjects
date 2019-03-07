@@ -14,6 +14,9 @@ public class Percolation {
 
 
     public Percolation(int N) {
+        if (N <= 0) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
         perc = new boolean[N][N];
         track = new WeightedQuickUnionUF(N * N + 2);
         second = new WeightedQuickUnionUF(N * N + 2);
@@ -34,44 +37,32 @@ public class Percolation {
         if (perc[row][col]) {
             return;
         } else {
-            perc[row][col] = true;
-            openSites++;
-            int space = convert(row, col);
-            int one = convert(row - 1, col);
+            perc[row][col] = true; openSites++;
+            int space = convert(row, col); int one = convert(row - 1, col);
             int two = convert(row + 1, col);
-            int three = convert(row, col + 1);
-            int four = convert(row, col - 1);
-
-
+            int three = convert(row, col + 1); int four = convert(row, col - 1);
             for (int i = 0; i < len; i++) {
                 if (space == i) {
-                    track.union(top, convert(row, col));
-                    second.union(space, top);
+                    track.union(top, convert(row, col)); second.union(space, top);
                     if (space == 0) {
                         if (isOpen(row + 1, col)) {
-                            track.union(space, two);
-                            second.union(space, two);
-
+                            track.union(space, two); second.union(space, two);
                         }
                         return;
                     } else if (space == len - 1) {
                         if (isOpen(row + 1, col)) {
-                            track.union(space, two);
-                            second.union(space, two);
+                            track.union(space, two); second.union(space, two);
                         }
                         return;
                     } else {
                         if (isOpen(row + 1, col)) {
-                            track.union(space, two);
-                            second.union(space, two);
+                            track.union(space, two); second.union(space, two);
                         }
                         if (isOpen(row, col + 1)) {
-                            track.union(space, three);
-                            second.union(space, three);
+                            track.union(space, three); second.union(space, three);
                         }
                         if (isOpen(row, col - 1)) {
-                            track.union(space, four);
-                            second.union(space, four);
+                            track.union(space, four); second.union(space, four);
                         }
                         return;
                     }
@@ -82,27 +73,22 @@ public class Percolation {
                     second.union(space, bottom);
                     if (space == len * len - len) {
                         if (isOpen(row - 1, col)) {
-                            track.union(space, one);
-                            second.union(space, one);
+                            track.union(space, one); second.union(space, one);
                         }
                         if (isOpen(row, col + 1)) {
-                            track.union(space, three);
-                            second.union(space, three);
+                            track.union(space, three); second.union(space, three);
 
                         }
                         if (isFull(row - 1, col) || isFull(row, col + 1)) {
                             track.union(bottom, space);
-
                         }
                         return;
                     } else if (space == len * len - 1) {
                         if (isOpen(row - 1, col)) {
-                            track.union(space, one);
-                            second.union(space, one);
+                            track.union(space, one); second.union(space, one);
                         }
                         if (isOpen(row, col - 1)) {
-                            track.union(space, four);
-                            second.union(space, four);
+                            track.union(space, four); second.union(space, four);
 
                         }
                         if (isFull(row - 1, col) || isFull(row, col - 1)) {
@@ -111,16 +97,13 @@ public class Percolation {
                         return;
                     } else {
                         if (isOpen(row - 1, col)) {
-                            track.union(space, one);
-                            second.union(space, one);
+                            track.union(space, one); second.union(space, one);
                         }
                         if (isOpen(row, col + 1)) {
-                            track.union(space, three);
-                            second.union(space, three);
+                            track.union(space, three); second.union(space, three);
                         }
                         if (isOpen(row, col - 1)) {
-                            track.union(space, four);
-                            second.union(space, four);
+                            track.union(space, four); second.union(space, four);
                         }
                         if (isFull(row - 1, col) || isFull(row, col + 1) || isFull(row, col - 1)) {
                             track.union(space, bottom);
@@ -130,20 +113,16 @@ public class Percolation {
 
                 }
             }
-
             for (int i = len; i < len * (len - 1); i += len) {
                 if (space == i) {
                     if (isOpen(row + 1, col)) {
-                        track.union(space, two);
-                        second.union(space, two);
+                        track.union(space, two); second.union(space, two);
                     }
                     if (isOpen(row, col + 1)) {
-                        track.union(space, three);
-                        second.union(space, three);
+                        track.union(space, three); second.union(space, three);
                     }
                     if (isOpen(row - 1, col)) {
-                        track.union(space, one);
-                        second.union(space, one);
+                        track.union(space, one); second.union(space, one);
                     }
                     return;
                 }
@@ -151,35 +130,28 @@ public class Percolation {
             for (int i = len * 2 - 1; i < len * len - 1; i += len) {
                 if (space == i) {
                     if (isOpen(row - 1, col)) {
-                        track.union(space, one);
-                        second.union(space, one);
+                        track.union(space, one); second.union(space, one);
                     }
                     if (isOpen(row, col - 1)) {
-                        track.union(space, four);
-                        second.union(space, four);
+                        track.union(space, four); second.union(space, four);
                     }
                     if (isOpen(row + 1, col)) {
-                        track.union(space, two);
-                        second.union(space, two);
+                        track.union(space, two); second.union(space, two);
                     }
                     return;
                 }
             }
             if (isOpen(row + 1, col)) {
-                track.union(space, two);
-                second.union(space, two);
+                track.union(space, two); second.union(space, two);
             }
             if (isOpen(row - 1, col)) {
-                track.union(space, one);
-                second.union(space, one);
+                track.union(space, one); second.union(space, one);
             }
             if (isOpen(row, col + 1)) {
-                track.union(space, three);
-                second.union(space, three);
+                track.union(space, three); second.union(space, three);
             }
             if (isOpen(row, col - 1)) {
-                track.union(space, four);
-                second.union(space, four);
+                track.union(space, four); second.union(space, four);
             }
         }
     }
