@@ -10,11 +10,13 @@ public class Percolation {
     private int bottom;
     private int len;
     WeightedQuickUnionUF track;
+    WeightedQuickUnionUF second;
 
 
     public Percolation(int N) {
         perc = new boolean[N][N];
         track = new WeightedQuickUnionUF(N * N + 2);
+        second = new WeightedQuickUnionUF(N * N + 2);
         openSites = 0;
         top = N * N;
         bottom = N * N + 1;
@@ -40,28 +42,36 @@ public class Percolation {
             int three = convert(row, col + 1);
             int four = convert(row, col - 1);
 
+
             for (int i = 0; i < len; i++) {
                 if (space == i) {
                     track.union(top, convert(row, col));
+                    second.union(space, top);
                     if (space == 0) {
                         if (isOpen(row + 1, col)) {
                             track.union(space, two);
+                            second.union(space, two);
+
                         }
                         return;
                     } else if (space == len - 1) {
                         if (isOpen(row + 1, col)) {
                             track.union(space, two);
+                            second.union(space, two);
                         }
                         return;
                     } else {
                         if (isOpen(row + 1, col)) {
                             track.union(space, two);
+                            second.union(space, two);
                         }
                         if (isOpen(row, col + 1)) {
                             track.union(space, three);
+                            second.union(space, three);
                         }
                         if (isOpen(row, col - 1)) {
                             track.union(space, four);
+                            second.union(space, four);
                         }
                         return;
                     }
@@ -69,35 +79,48 @@ public class Percolation {
             }
             for (int i = len * len - len; i < len * len; i++) {
                 if (space == i) {
+                    second.union(space, bottom);
                     if (space == len * len - len) {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
+                            second.union(space, one);
+                        }
+                        if (isOpen(row, col + 1)) {
+                            track.union(space, three);
+                            second.union(space, three);
+
                         }
                         if (isFull(row - 1, col) || isFull(row, col + 1)) {
                             track.union(bottom, space);
-                        } else {
-                            track.union(space, three);
+
                         }
                         return;
                     } else if (space == len * len - 1) {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
+                            second.union(space, one);
+                        }
+                        if (isOpen(row, col - 1)) {
+                            track.union(space, four);
+                            second.union(space, four);
+
                         }
                         if (isFull(row - 1, col) || isFull(row, col - 1)) {
                             track.union(bottom, space);
-                        } else {
-                            track.union(space, four);
                         }
                         return;
                     } else {
                         if (isOpen(row - 1, col)) {
                             track.union(space, one);
+                            second.union(space, one);
                         }
                         if (isOpen(row, col + 1)) {
                             track.union(space, three);
+                            second.union(space, three);
                         }
                         if (isOpen(row, col - 1)) {
                             track.union(space, four);
+                            second.union(space, four);
                         }
                         if (isFull(row - 1, col) || isFull(row, col + 1) || isFull(row, col - 1)) {
                             track.union(space, bottom);
@@ -112,12 +135,15 @@ public class Percolation {
                 if (space == i) {
                     if (isOpen(row + 1, col)) {
                         track.union(space, two);
+                        second.union(space, two);
                     }
                     if (isOpen(row, col + 1)) {
                         track.union(space, three);
+                        second.union(space, three);
                     }
                     if (isOpen(row - 1, col)) {
                         track.union(space, one);
+                        second.union(space, one);
                     }
                     return;
                 }
@@ -126,27 +152,34 @@ public class Percolation {
                 if (space == i) {
                     if (isOpen(row - 1, col)) {
                         track.union(space, one);
+                        second.union(space, one);
                     }
                     if (isOpen(row, col - 1)) {
                         track.union(space, four);
+                        second.union(space, four);
                     }
                     if (isOpen(row + 1, col)) {
                         track.union(space, two);
+                        second.union(space, two);
                     }
                     return;
                 }
             }
             if (isOpen(row + 1, col)) {
                 track.union(space, two);
+                second.union(space, two);
             }
             if (isOpen(row - 1, col)) {
                 track.union(space, one);
+                second.union(space, one);
             }
             if (isOpen(row, col + 1)) {
                 track.union(space, three);
+                second.union(space, three);
             }
             if (isOpen(row, col - 1)) {
                 track.union(space, four);
+                second.union(space, four);
             }
         }
     }
@@ -172,7 +205,7 @@ public class Percolation {
 
     public boolean percolates() {
 
-        return track.connected(top, bottom);
+        return second.connected(top, bottom);
     }
 
     public static void main(String[] args) {
