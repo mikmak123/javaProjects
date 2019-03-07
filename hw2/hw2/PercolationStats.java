@@ -4,9 +4,9 @@ import edu.princeton.cs.introcs.StdRandom;
 
 public class PercolationStats {
     private int side;
-    private PercolationFactory fac;
+    private Percolation fac;
     private int exp;
-    private int[] fraction;
+    private double[] fraction;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
@@ -14,21 +14,18 @@ public class PercolationStats {
         }
         side = N;
         exp = T;
-        fac = pf;
-        fraction = new int[exp];
+        fraction = new double[exp];
 
         for (int i = 0; i < exp; i++) {
-            Percolation test = pf.make(N);
-
-            while (!test.percolates()) {
-
+            fac = pf.make(N);
+            while (!fac.percolates()) {
                 int row = StdRandom.uniform(0, side);
                 int col = StdRandom.uniform(0, side);
-                if (!test.isOpen(row, col)) {
-                    test.open(row, col);
+                if (!fac.isOpen(row, col)) {
+                    fac.open(row, col);
                 }
             }
-            fraction[i] = test.numberOfOpenSites() / (side * side);
+            fraction[i] = (double) fac.numberOfOpenSites() / (side * side);
         }
     }
 
@@ -46,4 +43,5 @@ public class PercolationStats {
         double num = mean() + 1.96 * stddev();
         return num / Math.sqrt(exp);
     }
+
 }

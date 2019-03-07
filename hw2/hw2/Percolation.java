@@ -45,6 +45,11 @@ public class Percolation {
                 if (space == i) {
                     track.union(top, convert(row, col)); second.union(space, top);
                     if (space == 0) {
+                        if (len == 1) {
+                            track.union(bottom, top);
+                            second.union(bottom, top);
+                            return;
+                        }
                         if (isOpen(row + 1, col)) {
                             track.union(space, two); second.union(space, two);
                         }
@@ -181,6 +186,10 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-
+        Percolation test = new Percolation(2);
+        test.open(0,0);
+        test.open(1, 0);
+        test.open(0, 1);
+        test.open(1,1);
     }
 }
