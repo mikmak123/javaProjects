@@ -25,23 +25,28 @@ public class PercolationStats {
                     fac.open(row, col);
                 }
             }
-            fraction[i] = (double) fac.numberOfOpenSites() / (side * side);
+            fraction[i] = (double) fac.numberOfOpenSites() / (Math.pow(side, 2));
         }
     }
 
     public double mean() {
-        return StdStats.mean(fraction);
-    }
-    public double stddev() {
-        return StdStats.stddev(fraction);
-    }
-    public double confidenceLow() {
-        double num = mean() - 1.96 * stddev();
-        return num / Math.sqrt(exp);
-    }
-    public double confidenceHigh() {
-        double num = mean() + 1.96 * stddev();
-        return num / Math.sqrt(exp);
+        double mean = StdStats.mean(fraction);
+        return mean;
     }
 
+    public double stddev() {
+        double std = StdStats.stddev(fraction);
+        return std;
+    }
+
+    public double confidenceLow() {
+        double num = 1.96 * stddev() / Math.sqrt(exp);
+        return mean() - num;
+    }
+
+    public double confidenceHigh() {
+        double num = 1.96 * stddev() / Math.sqrt(exp);
+        return mean() + num;
+    }
 }
+
