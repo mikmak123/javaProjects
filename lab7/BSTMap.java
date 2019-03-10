@@ -13,8 +13,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             key = k;
             value = v;
             size = s;
-            left = null;
-            right = null;
         }
     }
 
