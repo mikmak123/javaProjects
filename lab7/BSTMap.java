@@ -113,13 +113,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (r == null) {
             return;
         }
-        if (root.left == null) {
-            System.out.println(get(root.key));
+        if (r.left == null) {
+            System.out.println(get(r.key));
             print(r.right);
         } else {
             print(r.left);
+            System.out.println(r.value);
             print(r.right);
         }
     }
+
 }
 
