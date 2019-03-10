@@ -22,27 +22,28 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private V get(Node r, K k) {
         int comp = k.compareTo(r.key);
-        if(r == null) {
+        if (r == null) {
             return null;
         }
-        if(comp == 0) {
+        if (comp == 0) {
             return r.value;
         }
-        if(comp < 0) {
+        if (comp < 0) {
             return get(r.left, k);
-        } else
+        } else {
             return get(r.right, k);
+        }
     }
 
     private Node put(Node r, K k, V v) {
-        if(r == null) {
-            return new Node(k ,v , 1);
+        if (r == null) {
+            return new Node(k, v, 1);
         }
         int comp = k.compareTo(r.key);
-        if(comp < 0) {
-            r.left = put(r.left, k , v);
-        } else if(comp > 0) {
-            r.right = put(r.right, k ,v);
+        if (comp < 0) {
+            r.left = put(r.left, k, v);
+        } else if (comp > 0) {
+            r.right = put(r.right, k, v);
         } else {
             r.value = v;
         }
@@ -90,7 +91,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
-    public V remove(K Key) {
+    public V remove(K key) {
         throw new UnsupportedOperationException();
     }
 
@@ -109,10 +110,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         print(root);
     }
     public void print(Node r) {
-        if(r == null) {
+        if (r == null) {
             return;
         }
-        if(root.left == null) {
+        if (root.left == null) {
             System.out.println(get(root.key));
             print(r.right);
         } else {
