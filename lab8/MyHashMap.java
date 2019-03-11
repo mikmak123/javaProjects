@@ -6,10 +6,10 @@ import java.util.Set;
 
 public class MyHashMap<K, V> implements Map61B<K, V>  {
 
-    int initSize;
-    double loadF;
-    HashSet<K> buckets;
-    ArrayList<Entry> store;
+    private int initSize;
+    private double loadF;
+    private HashSet<K> buckets;
+    private ArrayList<Entry> store;
 
 
     public MyHashMap() {
