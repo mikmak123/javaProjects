@@ -25,13 +25,13 @@ public class SimpleOomage implements Oomage {
 
     @Override
     public int hashCode() {
-        int result = 5;
+        int result = 0;
         if (!USE_PERFECT_HASH) {
             return red + green + blue;
         } else {
-            result += 100 + red / 5 * 156;
-            result += 90 + green / 5 * 31;
-            result += 80 + blue / 5 * (int) Math.pow(37, 2);
+            result = 31 * result + (red / 5);
+            result = 31 * result + (green / 5);
+            result = 31 * result + (blue / 5);
             return result;
         }
     }
