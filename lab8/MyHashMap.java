@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,35 +9,42 @@ public class MyHashMap<K, V> implements Map61B<K, V>  {
     int initSize;
     double loadF;
     HashSet<K> buckets;
-    ArrayList<V> values;
+    ArrayList<Entry> store;
 
 
     public MyHashMap() {
         initSize = 16;
         loadF = 0.75;
         buckets = new HashSet<>(initSize, (float) loadF);
-        values = new ArrayList<>();
+        store = new ArrayList<>();
     }
 
     public MyHashMap(int initialSize) {
         initSize = initialSize;
         loadF = 0.75;
         buckets = new HashSet<>(initSize, (float) loadF);
-        values = new ArrayList<>();
-
+        store = new ArrayList<>();
     }
 
     public MyHashMap(int initialSize, double loadFactor) {
         initSize = initialSize;
         loadF = loadFactor;
         buckets = new HashSet<>(initSize, (float) loadF);
-        values = new ArrayList<>();
+        store = new ArrayList<>();
+    }
+    private class Entry {
+        private K key;
+        private V val;
+        Entry(K k, V v) {
+            key = k;
+            val = v;
+        }
     }
 
     @Override
     public void clear() {
         buckets.clear();
-        values.clear();
+        store.clear();
     }
 
     @Override
@@ -46,7 +54,14 @@ public class MyHashMap<K, V> implements Map61B<K, V>  {
 
     @Override
     public V get(K key) {
-        return values.get(key.hashCode());
+        if (buckets.contains(key)) {
+            for (int i = 0; i <store.size(); i++) {
+                if (store.get(i).key == key) {
+                    return store.get(i).val;
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -56,8 +71,17 @@ public class MyHashMap<K, V> implements Map61B<K, V>  {
 
     @Override
     public void put(K key, V value) {
-        buckets.add(key);
-        values.add(key.hashCode(), value);
+        if (buckets.contains(key)) {
+            for (int i = 0; i <store.size(); i++) {
+                if (store.get(i).key == key) {
+                    store.get(i).val = value;
+                }
+            }
+        } else {
+            buckets.add(key);
+            Entry st = new Entry(key, value);
+            store.add(st);
+        }
     }
 
     @Override
