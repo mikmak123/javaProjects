@@ -33,7 +33,7 @@ public class SimpleOomage implements Oomage {
             //result = 31 * result + (green / 5);
             //result = 31 * result + (blue / 5);
             //return result;
-            return 257 * 257 * red + 257 * green + blue;
+            return 300 * 300 * (red / 5) + 300 * (green / 5) + blue / 5;
         }
     }
 
