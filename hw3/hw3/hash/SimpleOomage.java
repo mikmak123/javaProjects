@@ -29,10 +29,11 @@ public class SimpleOomage implements Oomage {
         if (!USE_PERFECT_HASH) {
             return red + green + blue;
         } else {
-            result = 31 * result + (red / 5);
-            result = 31 * result + (green / 5);
-            result = 31 * result + (blue / 5);
-            return result;
+            //result = 31 * result + (red / 5);
+            //result = 31 * result + (green / 5);
+            //result = 31 * result + (blue / 5);
+            //return result;
+            return 257 * 257 * red + 257 * green + blue;
         }
     }
 
