@@ -8,12 +8,14 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     private ArrayList<T> items;
     private HashMap<T, Double> pri;
+    private HashMap<T, Integer> ind;
     private int size;
 
     public ArrayHeapMinPQ() {
         items = new ArrayList<>();
         items.add(0, null);
         pri = new HashMap<T, Double>();
+        ind = new HashMap<>();
         size = 0;
     }
 
@@ -74,11 +76,14 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         T sec = getItem(two);
         items.set(one, sec);
         items.set(two, first);
+        ind.replace(first, two);
+        ind.replace(sec, two);
     }
 
 
 
     private void makeCorrect(int k) {
+        correctHead(k);
         if (parent(k) == 0) {
             return;
         } else {
@@ -141,6 +146,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (size == 1) {
             T temp = items.get(1);
             items.remove(1);
+            ind.remove(temp);
             size--;
             return temp;
         }
@@ -149,6 +155,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         double num = pri.get(remove);
         items.set(1, item);
         items.remove(size);
+        ind.remove(remove);
+        ind.replace(item, 1);
         size--;
         correctHead(1);
         pri.remove(remove);
@@ -164,6 +172,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         size++;
         items.add(item);
+        ind.put(item, size);
         pri.put(item, priority);
         makeCorrect(size);
     }
@@ -174,7 +183,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             throw new NoSuchElementException();
         }
         pri.replace(item, priority);
-        makeCorrect(items.indexOf(item));
+        makeCorrect(ind.get(item));
     }
 
 }
