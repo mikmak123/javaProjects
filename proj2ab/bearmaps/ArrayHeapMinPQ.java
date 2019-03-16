@@ -27,28 +27,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     public boolean contains(T item) {
         return ind.containsKey(item);
     }
-/**
-    public boolean contains(T item) {
-        if (contains(item, 1)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    private boolean contains(T item, int index) {
-        if (size == 0) {
-            throw new NoSuchElementException();
-        }
-        if (index >= items.size()) {
-            return false;
-        } else if (item == items.get(index).item) {
-            return true;
-        } else {
-            return contains(item, index * 2) || contains(item, index * 2 + 1);
-        }
-    }
-**/
     private int parent(int k) {
         return k / 2;
     }
@@ -71,10 +50,6 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     private double getPriority(int k) {
         return items.get(k).val;
-    }
-
-    private T getItem(int k) {
-        return items.get(k).item;
     }
 
     private Entry getEntry(int k) {
@@ -107,9 +82,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     private int findMinChild(int index) {
-        double min_p = Math.min(getPriority(leftChild(index)), getPriority(rightChild(index)));
+        int minP = (int) Math.min(getPriority(leftChild(index)), getPriority(rightChild(index)));
         int min;
-        if (min_p == getPriority(leftChild(index))) {
+        if (minP == getPriority(leftChild(index))) {
             min = leftChild(index);
         } else {
             min = rightChild(index);
@@ -122,7 +97,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
             int min = findMinChild(index);
 
-            if (getPriority(index) < getPriority(leftChild(index)) && getPriority(index) < getPriority(rightChild(index))) {
+            if (getPriority(index) < getPriority(leftChild(index))
+                    && getPriority(index) < getPriority(rightChild(index))) {
                 return;
             } else {
                 swap(index, min);
@@ -203,7 +179,6 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
         private T item;
         private double val;
-        private int index;
 
         Entry(T first, double priority) {
             item = first;
