@@ -92,7 +92,6 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     }
 
-
     private int findMinChild(int index) {
         int minP = (int) Math.min(getPriority(leftChild(index)), getPriority(rightChild(index)));
         int min;

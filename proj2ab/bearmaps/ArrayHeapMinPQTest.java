@@ -76,6 +76,10 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void test() {
+
+        System.out.print("Current Time in milliseconds = ");
+        System.out.println(System.currentTimeMillis());
+
         ArrayHeapMinPQ<String> test = new ArrayHeapMinPQ<>();
         test.add("Hi", 5);
         assertEquals(test.getSmallest(), "Hi");
@@ -94,6 +98,34 @@ public class ArrayHeapMinPQTest {
         assertEquals(test.getSmallest(), "cmon");
         test.changePriority("cmon", 3);
         assertEquals(test.getSmallest(), "n");
+
+    }
+
+    @Test
+    public void testNaive() {
+
+        System.out.print("Current Time in milliseconds = ");
+        System.out.println(System.currentTimeMillis());
+
+        NaiveMinPQ<String> test = new NaiveMinPQ<>();
+        test.add("Hi", 5);
+        assertEquals(test.getSmallest(), "Hi");
+        assertTrue(test.contains("Hi"));
+        assertEquals(test.size(), 1);
+        test.add("Hello", 4);
+        test.add("bruh", 9);
+        test.add("cmon", 2);
+        test.add("cuh", 6);
+        test.add("plz", 6);
+        test.add("dnt", 8);
+        test.add("do", 8);
+        test.add("it", 9);
+        test.add("n", 2);
+
+        assertEquals(test.getSmallest(), "cmon");
+        test.changePriority("cmon", 3);
+        assertEquals(test.getSmallest(), "n");
+
 
     }
 }
