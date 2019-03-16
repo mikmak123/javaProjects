@@ -25,6 +25,10 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public boolean contains(T item) {
+        return ind.containsKey(item);
+    }
+/**
+    public boolean contains(T item) {
         if (contains(item, 1)) {
             return true;
         } else {
@@ -44,7 +48,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             return contains(item, index * 2) || contains(item, index * 2 + 1);
         }
     }
-
+**/
     private int parent(int k) {
         return k / 2;
     }
@@ -95,6 +99,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         } else {
             if (getPriority(k) < getPriority(parent(k))) {
                 swap(k, parent(k));
+                makeCorrect(parent(k));
             } else {
                 return;
             }
@@ -190,14 +195,15 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             throw new NoSuchElementException();
         }
         int index = ind.get(item);
-        items.set(index, new Entry(item, priority));
-        makeCorrect(ind.get(item));
+        items.get(index).val = priority;
+        makeCorrect(index);
     }
 
     private class Entry {
 
         private T item;
         private double val;
+        private int index;
 
         Entry(T first, double priority) {
             item = first;
@@ -205,3 +211,5 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
     }
 }
+
+
