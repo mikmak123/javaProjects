@@ -78,9 +78,9 @@ public class ArrayHeapMinPQTest {
     public void test() {
         ArrayHeapMinPQ<String> test = new ArrayHeapMinPQ<>();
         test.add("Hi", 5);
-        System.out.println(test.getSmallest());
-        System.out.println(test.contains("Hi"));
-        System.out.println(test.size());
+        assertEquals(test.getSmallest(), "Hi");
+        assertTrue(test.contains("Hi"));
+        assertEquals(test.size(), 1);
         test.add("Hello", 4);
         test.add("bruh", 9);
         test.add("cmon", 2);
@@ -91,9 +91,9 @@ public class ArrayHeapMinPQTest {
         test.add("it", 9);
         test.add("n", 2);
 
-        System.out.println(test.getSmallest());
+        assertEquals(test.getSmallest(), "cmon");
         test.changePriority("cmon", 3);
-        System.out.println(test.getSmallest());
+        assertEquals(test.getSmallest(), "n");
 
     }
 }

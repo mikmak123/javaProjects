@@ -87,6 +87,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         if (getPriority(k) < getPriority(parent(k))) {
             swap(k, parent(k));
+            swim(parent(k));
         }
 
     }
