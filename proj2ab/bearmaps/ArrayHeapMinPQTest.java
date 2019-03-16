@@ -1,5 +1,6 @@
 package bearmaps;
 
+import edu.princeton.cs.algs4.Stopwatch;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
@@ -77,9 +78,6 @@ public class ArrayHeapMinPQTest {
     @Test
     public void test() {
 
-        System.out.print("Current Time in milliseconds = ");
-        System.out.println(System.currentTimeMillis());
-
         ArrayHeapMinPQ<String> test = new ArrayHeapMinPQ<>();
         test.add("Hi", 5);
         assertEquals(test.getSmallest(), "Hi");
@@ -102,30 +100,31 @@ public class ArrayHeapMinPQTest {
     }
 
     @Test
-    public void testNaive() {
+    public void testTimeFast() {
 
-        System.out.print("Current Time in milliseconds = ");
-        System.out.println(System.currentTimeMillis());
-
-        NaiveMinPQ<String> test = new NaiveMinPQ<>();
-        test.add("Hi", 5);
-        assertEquals(test.getSmallest(), "Hi");
-        assertTrue(test.contains("Hi"));
-        assertEquals(test.size(), 1);
-        test.add("Hello", 4);
-        test.add("bruh", 9);
-        test.add("cmon", 2);
-        test.add("cuh", 6);
-        test.add("plz", 6);
-        test.add("dnt", 8);
-        test.add("do", 8);
-        test.add("it", 9);
-        test.add("n", 2);
-
-        assertEquals(test.getSmallest(), "cmon");
-        test.changePriority("cmon", 3);
-        assertEquals(test.getSmallest(), "n");
-
+        ArrayHeapMinPQ<Integer> test = new ArrayHeapMinPQ<>();
+        Stopwatch timer1 = new Stopwatch();
+        for (int i = 0; i < 100000; i++) {
+            test.add(i, i);
+            test.contains(i);
+            test.getSmallest();
+        }
+        System.out.println("Fast Implementaiton 100,000 loops: "+ timer1.elapsedTime() + " seconds");
 
     }
+
+    @Test
+    public void testTimeNaive() {
+
+        NaiveMinPQ<Integer> test = new NaiveMinPQ<>();
+        Stopwatch timer1 = new Stopwatch();
+        for (int i = 0; i < 100000; i++) {
+            test.add(i, i);
+            test.contains(i);
+            test.getSmallest();
+        }
+        System.out.println("Slow Implementaiton 100,000 loops: "+ timer1.elapsedTime() + " seconds");
+    }
 }
+
+
