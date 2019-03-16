@@ -1,6 +1,9 @@
 package bearmaps;
 
 import org.junit.Test;
+
+import java.lang.reflect.Array;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -69,5 +72,28 @@ public class ArrayHeapMinPQTest {
         assertFalse(test.contains(7));
         assertTrue(test.contains(2));
         assertTrue(test.contains(5));
+    }
+
+    @Test
+    public void test() {
+        ArrayHeapMinPQ<String> test = new ArrayHeapMinPQ<>();
+        test.add("Hi", 5);
+        System.out.println(test.getSmallest());
+        System.out.println(test.contains("Hi"));
+        System.out.println(test.size());
+        test.add("Hello", 4);
+        test.add("bruh", 9);
+        test.add("cmon", 2);
+        test.add("cuh", 6);
+        test.add("plz", 6);
+        test.add("dnt", 8);
+        test.add("do", 8);
+        test.add("it", 9);
+        test.add("n", 2);
+
+        System.out.println(test.getSmallest());
+        test.changePriority("cmon", 3);
+        System.out.println(test.getSmallest());
+
     }
 }

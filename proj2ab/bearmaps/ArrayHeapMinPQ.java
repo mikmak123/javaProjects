@@ -63,23 +63,34 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         items.set(one, sec);
         items.set(two, first);
         ind.replace(first.item, two);
-        ind.replace(sec.item, two);
+        ind.replace(sec.item, one);
     }
 
 
     private void makeCorrect(int k) {
-        correctHead(k);
-        if (parent(k) == 0) {
-            return;
+        if (k == 1) {
+            correctHead(k);
         } else {
             if (getPriority(k) < getPriority(parent(k))) {
-                swap(k, parent(k));
-                makeCorrect(parent(k));
+                swim(k);
+            } else if (hasLeft(k)) {
+                correctHead(k);
             } else {
                 return;
             }
         }
     }
+
+    private void swim(int k) {
+        if (k == 1) {
+            return;
+        }
+        if (getPriority(k) < getPriority(parent(k))) {
+            swap(k, parent(k));
+        }
+
+    }
+
 
     private int findMinChild(int index) {
         int minP = (int) Math.min(getPriority(leftChild(index)), getPriority(rightChild(index)));
@@ -148,7 +159,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         ind.remove(remove);
         ind.replace(item, 1);
         size--;
-        correctHead(1);
+        makeCorrect(1);
         return remove;
     }
 
