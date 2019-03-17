@@ -101,29 +101,42 @@ public class ArrayHeapMinPQTest {
 
     @Test
     public void testTimeFast() {
-
         ArrayHeapMinPQ<Integer> test = new ArrayHeapMinPQ<>();
-        Stopwatch timer1 = new Stopwatch();
-        for (int i = 0; i < 100000; i++) {
+
+        for (int i = 0; i < Math.pow(10, 7); i++) {
             test.add(i, i);
-            test.contains(i);
-            test.getSmallest();
         }
-        System.out.println("Fast Implementaiton 100,000 loops: "+ timer1.elapsedTime() + " seconds");
+
+        Stopwatch timer1 = new Stopwatch();
+        for (int i = 0; i < 10000; i++) {
+            test.add((int) (i + Math.pow(10, 7)), i);
+        }
+        test.changePriority(999999, 1);
+        test.contains(700000);
+        test.removeSmallest();
+        test.changePriority(700000, 2);
+        test.removeSmallest();
+        System.out.println("Fast Implementaiton Heap: "+ timer1.elapsedTime() + " seconds");
 
     }
 
     @Test
     public void testTimeNaive() {
-
         NaiveMinPQ<Integer> test = new NaiveMinPQ<>();
-        Stopwatch timer1 = new Stopwatch();
-        for (int i = 0; i < 100000; i++) {
+
+        for (int i = 0; i < Math.pow(10, 7); i++) {
             test.add(i, i);
-            test.contains(i);
-            test.getSmallest();
         }
-        System.out.println("Slow Implementaiton 100,000 loops: "+ timer1.elapsedTime() + " seconds");
+        Stopwatch timer1 = new Stopwatch();
+        for (int i = 0; i < 10000; i++) {
+            test.add((int) (i + Math.pow(10, 7)), i);
+        }
+        test.changePriority(999999, 1);
+        test.contains(700000);
+        test.removeSmallest();
+        test.changePriority(700000, 2);
+        test.removeSmallest();
+        System.out.println("Slow Implementaiton Heap: "+ timer1.elapsedTime() + " seconds");
     }
 }
 
