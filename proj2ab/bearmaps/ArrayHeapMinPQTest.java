@@ -126,12 +126,17 @@ public class ArrayHeapMinPQTest {
         for (int i = 0; i < 10000; i++) {
             test.add((int) (i + Math.pow(10, 7)), 1);
         }
+        for (int i = 0; i < 1000; i++) {
+            test.changePriority(2000000 + i, 9000000 - i);
+        }
 
         test.changePriority(5000000, 5);
         test.contains(700000);
         test.removeSmallest();
         test.changePriority(700000, 5);
         test.removeSmallest();
+        test.contains(4);
+
         System.out.println("Fast Implementaiton Heap: " + timer1.elapsedTime() + " seconds");
     }
 
@@ -142,11 +147,12 @@ public class ArrayHeapMinPQTest {
             test.add(i, i);
         }
 
-
         Stopwatch timer1 = new Stopwatch();
-
         for (int i = 0; i < 10000; i++) {
             test.add((int) (i + Math.pow(10, 7)), 1);
+        }
+        for (int i = 0; i < 1000; i++) {
+            test.changePriority(2000000 + i, 9000000 - i);
         }
 
         test.changePriority(5000000, 5);
@@ -154,6 +160,8 @@ public class ArrayHeapMinPQTest {
         test.removeSmallest();
         test.changePriority(700000, 5);
         test.removeSmallest();
+        test.contains(4);
+
         System.out.println("Slow Implementaiton Heap: " + timer1.elapsedTime() + " seconds");
     }
 }
