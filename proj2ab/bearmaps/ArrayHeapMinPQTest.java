@@ -81,7 +81,7 @@ public class ArrayHeapMinPQTest {
         assertTrue(test.contains(2));
         assertTrue(test.contains(5));
         test.add(6, 17);
-        test.add(7,10);
+        test.add(7, 10);
         assertTrue(test.contains(6));
         assertTrue(test.contains(7));
         assertFalse(test.contains(10));
@@ -132,7 +132,7 @@ public class ArrayHeapMinPQTest {
         test.removeSmallest();
         test.changePriority(700000, 5);
         test.removeSmallest();
-        System.out.println("Fast Implementaiton Heap: "+ timer1.elapsedTime() + " seconds");
+        System.out.println("Fast Implementaiton Heap: " + timer1.elapsedTime() + " seconds");
     }
 
     @Test
@@ -154,6 +154,7 @@ public class ArrayHeapMinPQTest {
         test.removeSmallest();
         test.changePriority(700000, 5);
         test.removeSmallest();
-        System.out.println("Slow Implementaiton Heap: "+ timer1.elapsedTime() + " seconds");
+        System.out.println("Slow Implementaiton Heap: " + timer1.elapsedTime() + " seconds");
     }
 }
+
