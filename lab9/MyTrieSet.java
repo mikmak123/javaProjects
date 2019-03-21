@@ -1,5 +1,5 @@
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class MyTrieSet implements TrieSet61B {
 
@@ -9,8 +9,13 @@ public class MyTrieSet implements TrieSet61B {
 
 
     private static class Node {
+
+        public Node(char c, boolean key) {
+            val = c;
+            isKey = key;
+        }
         private Object val;
-        private HashMap<Integer, Node> map = new HashMap<>();
+        private HashMap<Character, Node> map = new HashMap<>();
         private boolean isKey = false;
     }
 
@@ -30,21 +35,24 @@ public class MyTrieSet implements TrieSet61B {
 
     @Override
     public List<String> keysWithPrefix(String prefix) {
-        return null;
+        return keysWithPrefixHelp("", prefix, new ArrayList<String>(), root);
     }
+
+    public List<String> keysWithPrefixHelp(String ret, String prefix, List<String> x, Node n) {
+        if (n.isKey) {
+            x.add(ret);
+        }
+        for (char c : n.map.keySet()) {
+            keysWithPrefixHelp(ret + c, prefix.substring(1), x, n.map.get(c));
+        }
+        return x;
+    }
+
+
 
     @Override
     public String longestPrefixOf(String key) {
-        Node curr = root;
-        String ret = "";
-        for (int i = 0; i < key.length(); i++) {
-            if (contains(key.substring(1, i))) {
-                ret = key.substring(1, i);
-            } else {
-                break;
-            }
-        }
-        return ret;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -62,7 +70,6 @@ public class MyTrieSet implements TrieSet61B {
         }
         curr.isKey = true;
     }
-
 
     @Override
     public void clear() {
