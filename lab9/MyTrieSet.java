@@ -4,7 +4,6 @@ public class MyTrieSet implements TrieSet61B {
 
     private static final int R = 128;
     private Node root;
-    private int n;
 
 
     private static class Node {
@@ -16,6 +15,9 @@ public class MyTrieSet implements TrieSet61B {
         private Object val;
         private HashMap<Character, Node> map = new HashMap<>();
         private boolean isKey = false;
+    }
+    public MyTrieSet() {
+        root = new Node('a', false);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class MyTrieSet implements TrieSet61B {
     public List<String> keysWithPrefixHelp(String ret, String prefix, List<String> x, Node n) {
         if (n.isKey) {
             x.add(ret);
+            return x;
         }
         for (char c : n.map.keySet()) {
             keysWithPrefixHelp(ret + c, prefix.substring(1), x, n.map.get(c));
@@ -75,4 +78,5 @@ public class MyTrieSet implements TrieSet61B {
         root.val = -1;
         root.map = new HashMap<>();
     }
+    
 }
