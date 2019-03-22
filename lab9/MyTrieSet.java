@@ -39,7 +39,7 @@ public class MyTrieSet implements TrieSet61B {
         return keysWithPrefixHelp("", prefix, new ArrayList<String>(), root);
     }
 
-    public List<String> keysWithPrefixHelp(String ret, String prefix, List<String> x, Node n) {
+    private List<String> keysWithPrefixHelp(String ret, String prefix, List<String> x, Node n) {
         if (n.isKey) {
             x.add(ret);
             return x;
@@ -78,5 +78,5 @@ public class MyTrieSet implements TrieSet61B {
         root.val = -1;
         root.map = new HashMap<>();
     }
-    
+
 }
