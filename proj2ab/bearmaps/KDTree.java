@@ -80,7 +80,7 @@ public class KDTree {
     }
 
     private int compare(Node one, Node two) {
-        if (one.layout % 1 == 0) {
+        if (one.layout % 2 == 0) {
             if (X(one) < X(two)) {
                 return -1;
             } else if (X(one) == X(two)) {
