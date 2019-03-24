@@ -23,7 +23,7 @@ public class KDTree {
         return n.left != null;
     }
     private boolean hasRight(Node n) {
-        return n.left != null;
+        return n.right != null;
     }
 
     public KDTree(List<Point> points) {
@@ -50,30 +50,30 @@ public class KDTree {
         }
         if (n.layout % 2 == 0) {
             if (p.getX() <= X(n)) {
-                if (hasLeft(n)) {
-                    insert(p, n.left, c + 1);
-                } else {
+                if (!hasLeft(n)) {
                     n.left = new Node(p, c);
+                } else {
+                    insert(p, n.left, c + 1);
                 }
             } else {
-                if (hasRight(n)) {
-                    insert(p, n.right, c + 1);
-                } else{
+                if (!hasRight(n)) {
                     n.right = new Node(p, c);
+                } else{
+                    insert(p, n.right, c + 1);
                 }
             }
         } else {
             if (p.getY() <= Y(n)) {
-                if (hasLeft(n)) {
-                    insert(p, n.left, c + 1);
-                } else {
+                if (!hasLeft(n)) {
                     n.left = new Node(p, c);
+                } else {
+                    insert(p, n.left, c + 1);
                 }
             } else {
-                if (hasRight(n)) {
-                    insert(p, n.right, c + 1);
-                } else{
+                if (!hasRight(n)) {
                     n.right = new Node(p, c);
+                } else{
+                    insert(p, n.right, c + 1);
                 }
             }
         }
@@ -130,5 +130,5 @@ public class KDTree {
         return best.p;
     }
 
-
 }
+
