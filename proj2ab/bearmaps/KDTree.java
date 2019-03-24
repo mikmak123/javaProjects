@@ -16,8 +16,6 @@ public class KDTree {
 
         public Node(Point point, int lay) {
             p = point;
-            left = null;
-            right = null;
             layout = lay;
         }
     }
@@ -47,7 +45,9 @@ public class KDTree {
     }
 
     private void insert(Point p, Node n, int c) {
-
+        if (p.getX() == X(n) && p.getY() == Y(n)) {
+            return;
+        }
         if (n.layout % 2 == 0) {
             if (p.getX() <= X(n)) {
                 if (hasLeft(n)) {
@@ -129,5 +129,6 @@ public class KDTree {
         }
         return best.p;
     }
+
 
 }
