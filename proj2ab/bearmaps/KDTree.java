@@ -33,7 +33,7 @@ public class KDTree {
         size = store.size();
         root = new Node(store.get(0), 0);
         if (size > 1) {
-            for (int i = 1; i <= store.size(); i++) {
+            for (int i = 1; i < store.size(); i++) {
                 insert(store.get(i), root, 1);
             }
         }
@@ -130,5 +130,4 @@ public class KDTree {
         return best.p;
     }
 
-    
 }
