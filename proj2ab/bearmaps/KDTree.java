@@ -14,7 +14,7 @@ public class KDTree {
         private Node right;
         private int layout;
 
-        public Node(Point point, int lay) {
+        Node(Point point, int lay) {
             p = point;
             layout = lay;
         }
@@ -58,7 +58,7 @@ public class KDTree {
             } else {
                 if (!hasRight(n)) {
                     n.right = new Node(p, c);
-                } else{
+                } else {
                     insert(p, n.right, c + 1);
                 }
             }
@@ -72,7 +72,7 @@ public class KDTree {
             } else {
                 if (!hasRight(n)) {
                     n.right = new Node(p, c);
-                } else{
+                } else {
                     insert(p, n.right, c + 1);
                 }
             }
@@ -113,7 +113,7 @@ public class KDTree {
         if (Point.distance(n.p, goal) < Point.distance(best.p, goal)) {
             best = n;
         }
-        if (compare(n, new Node(goal,0)) <= 0) {
+        if (compare(n, new Node(goal, 0)) <= 0) {
             goodSide = n.left;
             badSide = n.right;
 

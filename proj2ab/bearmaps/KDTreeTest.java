@@ -14,8 +14,8 @@ public class KDTreeTest {
 
         ArrayList<Point> temp = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            double x = Math.random()*10;
-            double y = Math.random()*10;
+            double x = Math.random() * 10;
+            double y = Math.random() * 10;
             temp.add(new Point(x, y));
         }
 
