@@ -2,11 +2,12 @@ package bearmaps;
 
 import java.util.List;
 
-public class KDTree {
+public class KDTree implements PointSet {
 
     private List<Point> store;
     private Node root;
     private int size;
+    private int sizeOf;
 
     private class Node {
         private Point p;
@@ -30,6 +31,7 @@ public class KDTree {
         store = points;
         size = store.size();
         root = new Node(store.get(0), 0);
+        sizeOf = 1;
         if (size > 1) {
             for (int i = 1; i < store.size(); i++) {
                 insert(store.get(i), root, 1);
@@ -52,12 +54,14 @@ public class KDTree {
             if (p.getX() <= X(n)) {
                 if (!hasLeft(n)) {
                     n.left = new Node(p, c);
+                    sizeOf++;
                 } else {
                     insert(p, n.left, c + 1);
                 }
             } else {
                 if (!hasRight(n)) {
                     n.right = new Node(p, c);
+                    sizeOf++;
                 } else {
                     insert(p, n.right, c + 1);
                 }
@@ -66,17 +70,23 @@ public class KDTree {
             if (p.getY() <= Y(n)) {
                 if (!hasLeft(n)) {
                     n.left = new Node(p, c);
+                    sizeOf++;
                 } else {
                     insert(p, n.left, c + 1);
                 }
             } else {
                 if (!hasRight(n)) {
                     n.right = new Node(p, c);
+                    sizeOf++;
                 } else {
                     insert(p, n.right, c + 1);
                 }
             }
         }
+    }
+
+    int getSizeOf() {
+        return sizeOf;
     }
 
     private int compare(Node one, Node two) {
@@ -100,6 +110,7 @@ public class KDTree {
     }
 
 
+    @Override
     public Point nearest(double x, double y) {
         return nearest(root, new Point(x, y), root);
     }
@@ -114,12 +125,12 @@ public class KDTree {
             best = n;
         }
         if (compare(n, new Node(goal, 0)) <= 0) {
-            goodSide = n.left;
-            badSide = n.right;
-
-        } else {
             goodSide = n.right;
             badSide = n.left;
+
+        } else {
+            goodSide = n.left;
+            badSide = n.right;
         }
         best = new Node(nearest(goodSide, goal, best), 0);
         double one = Point.distance(new Point(X(n), goal.getY()), goal);
