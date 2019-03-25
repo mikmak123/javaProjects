@@ -122,16 +122,16 @@ public class KDTree {
             badSide = n.left;
         }
         best = new Node(nearest(goodSide, goal, best), 0);
-        double y = Point.distance(new Point(X(best), goal.getY()), goal);
-        double x = Point.distance(new Point(goal.getX(), Y(best)), goal);
+        double one = Point.distance(new Point(X(best), goal.getY()), goal);
+        double two = Point.distance(new Point(goal.getX(), Y(best)), goal);
 
         if (n.layout % 2 == 0) {
-            if (x < Point.distance(best.p, goal)) {
+            if (one < Point.distance(best.p, goal)) {
                 best = new Node(nearest(badSide, goal, best), 0);
             }
         }
         if (n.layout % 2 == 1) {
-            if (y < Point.distance(best.p, goal)) {
+            if (two < Point.distance(best.p, goal)) {
                 best = new Node(nearest(badSide, goal, best), 0);
             }
         }
