@@ -111,7 +111,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     @Override
     public double solutionWeight() {
-        if (outcome() == SolverOutcome.TIMEOUT || outcome() == SolverOutcome.UNSOLVABLE) {
+        if (outcome().equals(SolverOutcome.TIMEOUT) || outcome().equals(SolverOutcome.UNSOLVABLE)) {
             return 0;
         } else {
             return distTo.get(en);
@@ -127,7 +127,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         Vertex n = en;
         sol.addFirst(n);
         n = edgeTo.get(n);
-        while (n != st) {
+        while (!n.equals(st)) {
             sol.addFirst(n);
             n = edgeTo.get(n);
         }
@@ -136,7 +136,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     @Override
     public List<Vertex> solution() {
-        if (outcome() == SolverOutcome.TIMEOUT || outcome() == SolverOutcome.UNSOLVABLE) {
+        if (outcome().equals(SolverOutcome.TIMEOUT) || outcome().equals(SolverOutcome.UNSOLVABLE)) {
             return new ArrayList<>();
         } else {
             return sol;
