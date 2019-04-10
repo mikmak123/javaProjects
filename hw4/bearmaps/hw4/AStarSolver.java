@@ -3,7 +3,6 @@ package bearmaps.hw4;
 import bearmaps.proj2ab.DoubleMapPQ;
 import edu.princeton.cs.algs4.Stopwatch;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,12 +35,21 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         distTo.put(start, 0.0);
         edgeTo.put(start, null);
 
+        if (start.equals(end)) {
+            out = SolverOutcome.SOLVED;
+            time = clock.elapsedTime();
+            sol.addFirst(start);
+            return;
+        }
+
         while (pq.size() != 0 && !pq.getSmallest().equals(end)) {
+
             if (clock.elapsedTime() > timeout) {
                 out = SolverOutcome.TIMEOUT;
                 time = clock.elapsedTime();
                 return;
             }
+
             Vertex p = pq.removeSmallest();
             numStates++;
 
@@ -136,11 +144,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     @Override
     public List<Vertex> solution() {
-        if (outcome().equals(SolverOutcome.TIMEOUT) || outcome().equals(SolverOutcome.UNSOLVABLE)) {
-            return new ArrayList<>();
-        } else {
             return sol;
-        }
     }
 
 
