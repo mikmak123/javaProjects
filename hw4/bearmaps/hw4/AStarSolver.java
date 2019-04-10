@@ -37,8 +37,8 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
         if (start.equals(end)) {
             out = SolverOutcome.SOLVED;
-            time = clock.elapsedTime();
             sol.addFirst(start);
+            time = clock.elapsedTime();
             return;
         }
 
@@ -83,12 +83,12 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             pq.add(q, distTo.get(q) + in.estimatedDistanceToGoal(q, en));
             edgeTo.put(q, e);
         } else {
-                if (distTo.get(e) + w < distTo.get(q)) {
-                    distTo.put(q, distTo.get(e) + w);
-                    pq.changePriority(q, distTo.get(q) + in.estimatedDistanceToGoal(q, en));
-                    edgeTo.put(q, e);
-                }
+            if (distTo.get(e) + w < distTo.get(q)) {
+                distTo.put(q, distTo.get(e) + w);
+                pq.changePriority(q, distTo.get(q) + in.estimatedDistanceToGoal(q, en));
+                edgeTo.put(q, e);
             }
+        }
     }
 
 
@@ -144,7 +144,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     @Override
     public List<Vertex> solution() {
-            return sol;
+        return sol;
     }
 
 
