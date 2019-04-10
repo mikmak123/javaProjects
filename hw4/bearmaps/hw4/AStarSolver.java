@@ -51,16 +51,15 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             }
         }
 
+        if (pq.size() == 0) {
+            out = SolverOutcome.UNSOLVABLE;
+            time = clock.elapsedTime();
+            return;
+        }
         if (pq.getSmallest() == en) {
             out = SolverOutcome.SOLVED;
             time = clock.elapsedTime();
             sol();
-            return;
-        }
-
-        if (pq.size() == 0) {
-            out = SolverOutcome.UNSOLVABLE;
-            time = clock.elapsedTime();
             return;
         }
     }

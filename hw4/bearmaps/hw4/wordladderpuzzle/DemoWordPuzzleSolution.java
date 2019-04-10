@@ -20,6 +20,7 @@ public class DemoWordPuzzleSolution {
 
         WordGraph wg = new WordGraph();
 
+
         ShortestPathsSolver<String> solver = new AStarSolver<>(wg, start, goal, 10);
         SolutionPrinter.summarizeSolution(solver, "->");
     }
