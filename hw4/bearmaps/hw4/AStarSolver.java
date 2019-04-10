@@ -127,7 +127,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         Vertex n = en;
         sol.addFirst(n);
         n = edgeTo.get(n);
-        while (!n.equals(st)) {
+        while (!n.equals(null) && !n.equals(st)) {
             sol.addFirst(n);
             n = edgeTo.get(n);
         }
