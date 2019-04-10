@@ -36,7 +36,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         distTo.put(start, 0.0);
         edgeTo.put(start, null);
 
-        while (pq.size() != 0 && pq.getSmallest() != end) {
+        while (pq.size() != 0 && !pq.getSmallest().equals(end)) {
             if (clock.elapsedTime() > timeout) {
                 out = SolverOutcome.TIMEOUT;
                 time = clock.elapsedTime();
@@ -56,7 +56,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             time = clock.elapsedTime();
             return;
         }
-        if (pq.getSmallest() == en) {
+        if (pq.getSmallest().equals(en)) {
             out = SolverOutcome.SOLVED;
             time = clock.elapsedTime();
             sol();
