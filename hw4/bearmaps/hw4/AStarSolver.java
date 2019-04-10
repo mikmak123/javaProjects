@@ -71,10 +71,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         double w = p.weight();
 
         if (!distTo.containsKey(q)) {
-            if (in.neighbors(q).size() == 0) {
-                return;
-            }
-
             distTo.put(q, distTo.get(e) + w);
             pq.add(q, distTo.get(q) + in.estimatedDistanceToGoal(q, en));
             edgeTo.put(q, e);
