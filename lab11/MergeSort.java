@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.Queue;
 
-import javax.management.QueryEval;
 
 public class MergeSort {
     /**
@@ -95,6 +94,9 @@ public class MergeSort {
 
         int first = items.size() / 2;
 
+        if (items.size() == 0) {
+            return null;
+        }
         if (items.size() == 1) {
             return items;
         } else if (items.size() == 2) {
