@@ -91,29 +91,33 @@ public class MergeSort {
             Queue<Item> items) {
         Queue<Item> s = new Queue<>();
 
+        Queue<Item> copy = new Queue<>();
 
-        int first = items.size() / 2;
+        for (Item num : items) {
+            copy.enqueue(num);
+        }
+
+        int first = copy.size() / 2;
 
         if (items.size() == 0) {
             return new Queue<>();
         }
         if (items.size() == 1) {
-            return items;
+            return copy;
         } else if (items.size() == 2) {
-            Queue<Queue<Item>> sort = makeSingleItemQueues(items);
+            Queue<Queue<Item>> sort = makeSingleItemQueues(copy);
             return mergeSortedQueues(sort.dequeue(), sort.dequeue());
         } else {
-
             for (int i = 0; i < first; i++) {
-                s.enqueue(items.dequeue());
+                s.enqueue(copy.dequeue());
             }
 
             Queue one = s;
-            Queue two = items;
+            Queue two = copy;
 
-            items = mergeSortedQueues(mergeSort(one), mergeSort(two));
+            copy = mergeSortedQueues(mergeSort(one), mergeSort(two));
 
-            return items;
+            return copy;
         }
     }
 }
