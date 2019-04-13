@@ -95,7 +95,7 @@ public class MergeSort {
         int first = items.size() / 2;
 
         if (items.size() == 0) {
-            return null;
+            return new Queue<>();
         }
         if (items.size() == 1) {
             return items;
