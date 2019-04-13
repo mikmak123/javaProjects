@@ -1,5 +1,7 @@
 import edu.princeton.cs.algs4.Queue;
 
+import javax.management.QueryEval;
+
 public class MergeSort {
     /**
      * Removes and returns the smallest item that is in q1 or q2.
@@ -34,7 +36,7 @@ public class MergeSort {
     /**
      * Returns a queue of queues that each contain one item from items.
      *
-     * This method should take linear time and will result in "items" being empty
+     * This method should take linear time.
      *
      * @param   items  A Queue of items.
      * @return         A Queue of queues, each containing an item from items.
@@ -42,8 +44,14 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> single = new Queue<>();
+        for (Item t : items) {
+            Queue<Item> s = new Queue<>();
+            s.enqueue((t));
+            single.enqueue(s);
+        }
+
+        return single;
     }
 
     /**
@@ -61,15 +69,20 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Queue<Item> sorted = new Queue<>();
+
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            sorted.enqueue(getMin(q1, q2));
+        }
+
+        return sorted;
     }
 
     /**
      * Returns a Queue that contains the given items sorted from least to greatest.
      *
      * This method should take roughly nlogn time where n is the size of "items"
-     * running this method will result in "items" being emptied into the returned queue
+     * this method should be non-destructive and not empty "items".
      *
      * @param   items  A Queue to be sorted.
      * @return         A Queue containing every item in "items".
@@ -77,7 +90,28 @@ public class MergeSort {
      */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        Queue<Item> s = new Queue<>();
+
+
+        int first = items.size() / 2;
+
+        if (items.size() == 1) {
+            return items;
+        } else if (items.size() == 2) {
+            Queue<Queue<Item>> sort = makeSingleItemQueues(items);
+            return mergeSortedQueues(sort.dequeue(), sort.dequeue());
+        } else {
+
+            for (int i = 0; i < first; i++) {
+                s.enqueue(items.dequeue());
+            }
+
+            Queue one = s;
+            Queue two = items;
+
+            items = mergeSortedQueues(mergeSort(one), mergeSort(two));
+
+            return items;
+        }
     }
 }
