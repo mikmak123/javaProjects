@@ -141,6 +141,13 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         int lastIndexY = (int) (latInBetween / y);
         int numTilesY = lastIndexY - firstIndexY + 1;
 
+        if (numTilesX < 0) {
+            numTilesX = 0;
+        }
+
+        if (numTilesY < 0) {
+            numTilesY = 0;
+        }
 
 
         String[][] res = new String[numTilesY][numTilesX];
