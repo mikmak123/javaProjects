@@ -5,10 +5,13 @@ import bearmaps.proj2c.server.handler.APIRouteHandler;
 import spark.Request;
 import spark.Response;
 import bearmaps.proj2c.utils.Constants;
+import spark.Spark;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.awt.image.TileObserver;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static bearmaps.proj2c.utils.Constants.SEMANTIC_STREET_GRAPH;
-import static bearmaps.proj2c.utils.Constants.ROUTE_LIST;
+import static bearmaps.proj2c.utils.Constants.*;
 
 /**
  * Handles requests from the web browser for map images. These images
@@ -84,11 +86,80 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
      */
     @Override
     public Map<String, Object> processRequest(Map<String, Double> requestParams, Response response) {
-        //System.out.println("yo, wanna know the parameters given by the web browser? They are:");
-        //System.out.println(requestParams);
+
         Map<String, Object> results = new HashMap<>();
-        System.out.println("Since you haven't implemented RasterAPIHandler.processRequest, nothing is displayed in "
-                + "your browser.");
+
+
+        double ullat = requestParams.get("ullat");
+        double ullon = requestParams.get("ullon");
+        double lrlat = requestParams.get("lrlat");
+        double lrlon = requestParams.get("lrlon");
+        double width = requestParams.get("w");
+        double height = requestParams.get("h");
+        double lonDPP = (lrlon - ullon) / width;
+        boolean suc = true;
+
+        if (ullon > lrlon || ullat < lrlat || (ROOT_ULLON > ullon && ROOT_ULLAT < lrlat)) {
+            suc = false;
+        }
+
+        if (ullon < ROOT_ULLON) {
+            ullon = ROOT_ULLON;
+        }
+        if (ullat > ROOT_ULLAT) {
+            ullat = ROOT_ULLAT;
+        }
+        if (lrlon > ROOT_LRLON) {
+            lrlon = ROOT_LRLON;
+        }
+        if (lrlat < ROOT_LRLAT) {
+            lrlat = ROOT_LRLAT;
+        }
+
+        int depth = 0;
+        double lDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
+        while (lDPP > lonDPP) {
+            depth += 1;
+            lDPP /= 2;
+            if (depth == 7) {
+                break;
+            }
+        }
+
+        double x = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
+        double lon_till_first = ullon - ROOT_ULLON;
+        int firstIndexX = (int) (lon_till_first/ x);
+        double lonInBetween = lrlon - ROOT_ULLON;
+        int lastIndexX = (int) (lonInBetween / x);
+        int numTilesX = lastIndexX - firstIndexX + 1;
+
+        double y = (ROOT_ULLAT - ROOT_LRLAT) / Math.pow(2, depth);
+        double lat_till_first = ROOT_ULLAT - ullat;
+        int firstIndexY = (int) (lat_till_first / y);
+        double latInBetween = ROOT_ULLAT - lrlat;
+        int lastIndexY = (int) (latInBetween / y);
+        int numTilesY = lastIndexY - firstIndexY + 1;
+
+        String[][] res = new String[numTilesY][numTilesX];
+
+        for (int i = 0; i < numTilesY; i++) {
+            for (int j = 0; j < numTilesX; j++) {
+                res[i][j] = "d" + depth + "_x" + (j + firstIndexX) + "_y" + (i + firstIndexY) + ".png";
+            }
+        }
+
+        results.put("render_grid", res);
+        results.put("raster_ul_lon", ROOT_ULLON + firstIndexX * x);
+        results.put("raster_lr_lon", ROOT_ULLON + (lastIndexX + 1) * x);
+
+        results.put("raster_ul_lat", ROOT_ULLAT - firstIndexY * y);
+        results.put("raster_lr_lat", ROOT_ULLAT - (lastIndexY  + 1)* y);
+
+        results.put("depth", depth);
+        results.put("query_success", suc);
+
+
+
         return results;
     }
 
@@ -212,5 +283,18 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
             }
         }
         return tileImg;
+    }
+
+    public static void main(String[] args) {
+
+        RasterAPIHandler test = new RasterAPIHandler();
+        HashMap<String, Double> cmon = new HashMap<>();
+        cmon.put("lrlon", -122.2104604264636);
+        cmon.put("ullon", -122.30410170759153);
+        cmon.put("w", 1085.0);
+        cmon.put("h", 566.0);
+        cmon.put("ullat", 37.870213571328854);
+        cmon.put("lrlat", 37.8318576119893);
+
     }
 }
