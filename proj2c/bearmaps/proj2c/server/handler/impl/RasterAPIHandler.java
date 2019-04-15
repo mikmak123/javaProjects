@@ -103,6 +103,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
             suc = false;
         }
 
+
         if (ullon < ROOT_ULLON) {
             ullon = ROOT_ULLON;
         }
@@ -139,6 +140,14 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double latInBetween = ROOT_ULLAT - lrlat;
         int lastIndexY = (int) (latInBetween / y);
         int numTilesY = lastIndexY - firstIndexY + 1;
+
+        if (numTilesX < 0) {
+            numTilesX *= -1;
+        }
+
+        if (numTilesY < 0) {
+            numTilesY *= -1;
+        }
 
         String[][] res = new String[numTilesY][numTilesX];
 
