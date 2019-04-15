@@ -96,7 +96,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double lrlon = requestParams.get("lrlon");
         double width = requestParams.get("w");
         double height = requestParams.get("h");
-        double lonDPP = (lrlon - ullon) / width;
+        double lonDPP = Math.abs((lrlon - ullon)) / width;
         boolean suc = true;
 
         if (ullon > lrlon || ullat < lrlat || (ROOT_ULLON > ullon && ROOT_ULLAT < lrlat)) {
@@ -118,7 +118,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         }
 
         int depth = 0;
-        double lDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
+        double lDPP = Math.abs((ROOT_LRLON - ROOT_ULLON)) / TILE_SIZE;
         while (lDPP > lonDPP) {
             depth += 1;
             lDPP /= 2;
@@ -127,10 +127,10 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
             }
         }
 
-        double x = (ROOT_LRLON - ROOT_ULLON) / Math.pow(2, depth);
-        double lon_till_first = ullon - ROOT_ULLON;
+        double x = Math.abs((ROOT_LRLON - ROOT_ULLON)) / Math.pow(2, depth);
+        double lon_till_first = Math.abs(ullon - ROOT_ULLON);
         int firstIndexX = (int) (lon_till_first/ x);
-        double lonInBetween = lrlon - ROOT_ULLON;
+        double lonInBetween = Math.abs(lrlon - ROOT_ULLON);
         int lastIndexX = (int) (lonInBetween / x);
         int numTilesX = lastIndexX - firstIndexX + 1;
 
@@ -141,13 +141,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         int lastIndexY = (int) (latInBetween / y);
         int numTilesY = lastIndexY - firstIndexY + 1;
 
-        if (numTilesX < 0) {
-            numTilesX = 0;
-        }
 
-        if (numTilesY < 0) {
-            numTilesY = 0;
-        }
 
         String[][] res = new String[numTilesY][numTilesX];
 
