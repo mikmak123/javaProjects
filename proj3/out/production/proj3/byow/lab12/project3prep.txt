@@ -1,0 +1,36 @@
+Q: Can you think of an analogy between the process of tesselating hexagons and randomly generating a world using rooms and hallways? 
+What is the hexagon and what is the tesselation on the Project 3 side?
+
+A: We can consider the hexagons as rooms, and tesselating them means addings various sized rooms together.
+
+-----
+Q: If you were to start working on world generation, what kind of method would you think of writing first? 
+Think back to the lab and the process used to eventually get to tesselating hexagons.
+
+A: Create a method to generate a single room first, and then using the tesselation to add various sized rooms together into our world.
+
+-----
+Q: What distinguishes a hallway from a room? How are they similar?
+
+A: A hallway is a room with one of the coordinates staying the same, while the other changes. 
+
+-----
+Q: For tesselating hexagons, one of the hardest parts is figuring out where to place each hexagon/how to easily place hexagons on screen in an algorithmic way. 
+After looking at your own implemention, consider the implementation provided near the end of the lab. 
+How did your implementation differ from the given one? What lessons can be learned from it?
+
+A: For our implementation, we just broke the situation into columns, just like the lab implementation, but to decide how to place
+each hexagon in the column, we made helper functions that calculated the hexagon's positions. For example, if our column had 
+2 hexagons, we decided that the middle would be the height / 2 and the first hexagon's position would simply be that number
++ 2*length of the a hexagon's side. 
+
+We learned that we could use something similar to randomly generate rooms and hallways in our implementation of Proj 3 and then
+connect them together using the number-finding methods we used.
+
+-----
+Q: Consider an algorithm for placing rooms and hallways on your map. 
+Ideally, consider many algorithms and think about what makes some easier or harder to implement. Try and bring those ideas together into a single simple algorithm which accomplishes the task. 
+In general, algorithms with as few edge cases as possible are better algorithms.
+
+A: Randomly generate different sized rooms and place them on the world randomly as well. Then randomly create different lengthed hallways
+and use them to connect each room with another. 
